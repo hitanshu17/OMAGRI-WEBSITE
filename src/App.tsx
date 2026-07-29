@@ -7,7 +7,6 @@ import FruitsPage from "./pages/OurFruits";
 import PartnerWithUsPage from "./pages/PartnerWithUsPage";
 
 function App() {
-
   return (
     <Routes>
       <Route element={<MainLayout />}>
