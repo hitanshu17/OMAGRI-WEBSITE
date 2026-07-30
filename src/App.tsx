@@ -4,7 +4,7 @@ import MainLayout from "./layout/MainLayout"
 import HomePage from "./pages/HomePage";
 import About from "./pages/About";
 import FruitsPage from "./pages/OurFruits";
-import PartnerWithUsPage from "./pages/PartnerWithUsPage";
+import ContactUs from "./pages/ContactUs";
 import LeadershipPage from "./pages/LeadershipPage";
 import NetworkPage from "./pages/NetworkPage";
 
@@ -17,7 +17,7 @@ function App() {
         <Route path="/our-fruits" element={<FruitsPage />} />
         <Route path="/our-leadership" element={<LeadershipPage />} />
         <Route path="/our-network" element={<NetworkPage />} />
-        <Route path="/partner-with-us" element={<PartnerWithUsPage />} />
+        <Route path="/contact-us" element={<ContactUs />} />
       </Route>
     </Routes>
   );

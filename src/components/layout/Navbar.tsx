@@ -13,7 +13,7 @@ const navLinks = [
   { to: "/our-leadership", label: "Our Leadership" },
   { to: "/our-network", label: "Our Network" },
   { to: "/blog", label: "Blogs" },
-  { to: "/contact", label: "Contact Us" },
+  { to: "/contact-us", label: "Contact Us" },
 ];
 
 const Navbar = () => {
