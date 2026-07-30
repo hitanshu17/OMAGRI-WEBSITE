@@ -4,7 +4,7 @@ import { Leaf } from "lucide-react";
 
 import aboutUsHeader from "../assets/images/bread.jpg";
 import aboutFruitImg from "../assets/images/fruit-image.png";
-import HeroSection from "../components/ui/about/AboutHero";
+import HeroSection from "../components/shared/HeroSection";
 import { features, leaders } from "../data/aboutContent";
 import MissionVisionSimple from "../components/ui/about/Missionvisionsimple";
 
@@ -29,7 +29,7 @@ const About = () => {
         imageAlt="Assorted fresh fruit"
         title="About Us"
         breadcrumbs={[
-          { label: "R B Fruitech", href: "/" },
+          { label: "OMM Agri Villa", href: "/" },
           { label: "About Us" },
         ]}
       />
