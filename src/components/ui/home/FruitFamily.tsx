@@ -1,4 +1,5 @@
 import React from "react";
+
 import { fruitFamilyData } from "../../../data/fruitFamily";
 import map from "../../../assets/images/world-map.jpg";
 
