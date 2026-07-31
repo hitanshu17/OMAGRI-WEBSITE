@@ -8,8 +8,14 @@ export const leaders = [
   {
     initials: "KG",
     name: "Kanav Gaba",
-    title: "Partner, Operations",
+    title: "Founder & Managing Partner",
     bio: "Kanav brings a modern perspective to the business, driving our expansion into new markets while staying true to our founding commitment to quality.",
+  },
+  {
+    initials: "JG",
+    name: "Jitesh Gaba",
+    title: "Head of Purchase & Imports",
+    bio: "Jitesh brings a modern perspective to the business, driving our expansion into new markets while staying true to our founding commitment to quality.",
   },
 ];
 
