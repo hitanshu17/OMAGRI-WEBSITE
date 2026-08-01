@@ -306,12 +306,12 @@ function FruitHero({
           style={{ opacity: titleOpacity, y: titleY }}
           className="relative z-10 max-w-4xl px-6 sm:px-10 lg:px-16"
         >
-          <p
+          {/* <p
             className="font-mono text-[11px] sm:text-xs tracking-[0.3em] uppercase mb-6"
             style={{ color: fruit.accent }}
           >
             {fruit.eyebrow}
-          </p>
+          </p> */}
           <h1
             className="leading-[0.85] font-bold text-white"
             style={{
