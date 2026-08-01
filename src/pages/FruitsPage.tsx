@@ -306,12 +306,6 @@ function FruitHero({
           style={{ opacity: titleOpacity, y: titleY }}
           className="relative z-10 max-w-4xl px-6 sm:px-10 lg:px-16"
         >
-          {/* <p
-            className="font-mono text-[11px] sm:text-xs tracking-[0.3em] uppercase mb-6"
-            style={{ color: fruit.accent }}
-          >
-            {fruit.eyebrow}
-          </p> */}
           <h1
             className="leading-[0.85] font-bold text-white"
             style={{
@@ -499,9 +493,8 @@ function ReadingProgressBar({ accent }: { accent: string }) {
 
 // Small helper so ReadingProgressBar can share the same scroll container
 // ref as the page without prop-drilling a MotionValue down.
-const ScrollRefContext = createContext<React.RefObject<HTMLDivElement | null> | null>(
-  null,
-);
+const ScrollRefContext =
+  createContext<React.RefObject<HTMLDivElement | null> | null>(null);
 function useProgressScrollRef() {
   const ref = useContext(ScrollRefContext);
   if (!ref) throw new Error("ReadingProgressBar must be used within FruitPage");
@@ -549,15 +542,6 @@ export default function FruitPage() {
           <FruitHero fruit={fruit} reduceMotion={reduceMotion} />
 
           <VarietiesGrid fruit={fruit} reduceMotion={reduceMotion} />
-
-          <footer
-            className="px-6 sm:px-10 lg:px-20 py-16 text-center"
-            style={{ background: BRAND_DARK }}
-          >
-            <p className="text-white/30 text-xs font-mono tracking-widest uppercase">
-              /{fruit.slug} · sourced &amp; graded to spec
-            </p>
-          </footer>
         </ScrollRefContext.Provider>
       </motion.div>
     </AnimatePresence>

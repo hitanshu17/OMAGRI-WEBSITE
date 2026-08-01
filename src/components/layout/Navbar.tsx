@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 
-import logo from "../../assets/images/logonew.png";
-import { scrollToSection } from "../../utils/scrollToSection"; // adjust path to wherever you put the util
+import logo from "../../assets/images/OAVLOGO.png";
+import { scrollToSection } from "../../utils/scrollToSection";
 
 const PRIMARY = "#193768";
 
@@ -82,12 +82,7 @@ const Navbar = () => {
             handleNavClick("home");
           }}
         >
-          <img src={logo} alt="logo" className="w-12 h-12 object-contain" />
-          {/* <span
-            className="text-2xl md:text-3xl font-bold tracking-wide"
-          >
-            OMM AGRI
-          </span> */}
+          <img src={logo} alt="logo" className="w-32 h-32 object-contain" />
         </Link>
 
         {/* Desktop Navigation */}

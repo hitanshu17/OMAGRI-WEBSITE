@@ -10,7 +10,7 @@ import {
 import kiwiWhole from "../assets/images/kiwi-whole.webp";
 import kiwiPeeled from "../assets/images/kiwi-peeled.webp";
 import kiwiSliced from "../assets/images/kiwi-sliced.webp";
-import ommLogo from "../assets/images/logonew.png";
+import ommLogo from "../assets/images/OAVLOGO.png";
 
 interface Stage {
   eyebrow: string;
@@ -255,7 +255,7 @@ const HeroSection = () => {
             <img
               src={ommLogo}
               alt="OMM Agri Vila LLP"
-              className="mx-auto h-14 w-auto sm:h-20"
+              className="mx-auto h-20 w-48 sm:h-48"
             />
           </div>
           <p className="kiwi-label text-center text-[10px] text-white/45 sm:text-xs">
