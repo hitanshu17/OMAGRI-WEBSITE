@@ -25,16 +25,12 @@ export const defaultItems: ContactItem[] = [
   {
     id: "email",
     icon: "email",
-    content: "info@rbfruitech.com",
+    content: "ommagrivilla@gmail.com",
   },
   {
     id: "address",
     icon: "address",
-    content: [
-      "B-154, 2nd Floor, New Subzi",
-      "Mandi Azadpur, North West",
-      "Delhi-110033",
-    ],
+    content: ["C-110, New Sabzi Mandi, Azadpur", "New Delhi, Delhi, 110033"],
   },
 ];
 
