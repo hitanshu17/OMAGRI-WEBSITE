@@ -42,9 +42,9 @@ const ContactInfo: React.FC<ContactInfoProps> = ({
               return (
                 <div key={item.id}>
                   <div className="flex items-center gap-5 py-6">
-                    <span className="shrink-0 w-14 h-14 rounded-full bg-green-50 flex items-center justify-center">
+                    <span className="shrink-0 w-14 h-14 rounded-full bg-[#193768] flex items-center justify-center">
                       <Icon
-                        className="w-6 h-6 text-green-600"
+                        className="w-6 h-6 text-white"
                         strokeWidth={2}
                       />
                     </span>

@@ -3,11 +3,18 @@ import GetInTouch, { type ContactFormData } from "../components/ui/GetInTouch";
 import type { ContactItem } from "../data/contactInfo";
 import contactImg from "../assets/images/contact.webp";
 
-
 const ContactSection = () => {
   const myItems: ContactItem[] = [
-    { id: "phone", icon: "phone", content: "(+91) 987 36 46464" },
-    { id: "email", icon: "email", content: "ommagrivilla@gmail.com" },
+    {
+      id: "phone",
+      icon: "phone",
+      content: ["+91 8448332700"],
+    },
+    {
+      id: "email",
+      icon: "email",
+      content: ["ommagrivilla@gmail.com", "info@ommagrivilla.in"],
+    },
     {
       id: "address",
       icon: "address",

@@ -46,7 +46,6 @@ const exporterLogos: Logo[] = [
   { src: e2, alt: "Subsole" },
   { src: e3, alt: "Zestfruit" },
   { src: e4, alt: "Ideafruit" },
-  { src: e4, alt: "Erikci Tarim" },
   { src: e5, alt: "The Fresh Connection" },
   { src: e6, alt: "BARFF" },
   { src: e7, alt: "Nova Fruit" },
@@ -93,12 +92,12 @@ const InfiniteLogoCarousel: React.FC<InfiniteLogoCarouselProps> = ({
         {[...logos, ...logos].map((logo, i) => (
           <div
             key={`${logo.alt}-${i}`}
-            className="flex h-14 shrink-0 items-center justify-center grayscale transition duration-300 hover:grayscale-0 sm:h-16 md:h-20"
+            className="relative z-0 flex shrink-0 items-center justify-center transition-transform duration-300 ease-out hover:z-20 hover:scale-125 sm:h-16 md:h-20"
           >
             <img
               src={logo.src}
               alt={logo.alt}
-              className="max-h-full w-auto object-contain"
+              className="max-h-full w-auto object-contain transition duration-300 ease-out"
               draggable={false}
             />
           </div>
