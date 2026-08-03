@@ -1,3 +1,13 @@
+// Pear
+import pear from "../assets/images/pear-png-38680.png";
+import vermont from "../assets/images/vermont-pear.webp";
+import forelle from "../assets/images/forelle-pears.png";
+import packham from "../assets/images/Packham-s-Triumph-Pear.jpg";
+import redanjou from "../assets/images/redanjou.jpg";
+import willum from "../assets/images/willumpears.webp";
+import cheeky from "../assets/images/Cheeky.jpeg";
+
+
 // Kiwi
 import hkiwi from "../assets/images/Big-Kiwi.png";
 import haywardKiwi from "../assets/images/kiwi-hayward.webp";
@@ -165,8 +175,8 @@ export const FRUITS: Record<string, FruitData> = {
     intro:
       "Picked firm and green on purpose — ripening on the tree turns the flesh gritty. That deliberate hardness at harvest lets pears tolerate a longer supply chain, then ripen in days once they reach room temperature.",
     shape: "single",
-    heroImage: "/images/fruits/pear-hero.jpg",
-    thumbnail: "/images/fruits/pear-thumb.jpg",
+    heroImage: pear,
+    thumbnail: pear,
     accent: "#96A63A",
     deep: "#333813",
     paper: "#F1F2DC",
@@ -176,37 +186,37 @@ export const FRUITS: Record<string, FruitData> = {
         code: "VB-01",
         name: "Vermont Beauty",
         blurb: "A New England heirloom, blushed red over gold.",
-        image: "/images/fruits/varieties/pear-vermont-beauty.jpg",
+        image: vermont,
       },
       {
         code: "FR-02",
         name: "Forelle",
         blurb: "Small, bell-shaped, and speckled like a trout.",
-        image: "/images/fruits/varieties/pear-forelle.jpg",
+        image: forelle,
       },
       {
         code: "PT-03",
         name: "Packham's Triumph",
         blurb: "Bumpy skin, buttery texture when ripe.",
-        image: "/images/fruits/varieties/pear-packhams-triumph.jpg",
+        image: packham,
       },
       {
         code: "RA-04",
         name: "Red Anjou",
         blurb: "Dense and mild, holds its shape when cooked, in crimson skin.",
-        image: "/images/fruits/varieties/pear-red-anjou.jpg",
+        image: redanjou,
       },
       {
         code: "WM-05",
         name: "William Pear",
         blurb: "Classic pear flavour, bell-shaped, sweet from the skin in.",
-        image: "/images/fruits/varieties/pear-william.jpg",
+        image: willum,
       },
       {
         code: "CK-06",
         name: "Cheeky",
         blurb: "A newer, low-acid variety bred to be eaten young and crisp.",
-        image: "/images/fruits/varieties/pear-cheeky.jpg",
+        image: cheeky,
       },
     ],
   },
