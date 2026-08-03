@@ -19,6 +19,25 @@ import queen from "../assets/images/queen.jpeg";
 import pinkLady from "../assets/images/Pink-Lady-Apple.jpg";
 import green from "../assets/images/green.jpg";
 
+// Plums
+import plums from "../assets/images/plums.webp";
+import blackPlum from "../assets/images/black-plum.jpg";
+import redPlum from "../assets/images/red-plum.jpg";
+
+
+// Avacado
+import avacado1 from "../assets/images/avacado-1.webp";
+import avacado2 from "../assets/images/Avocado-hass.webp";
+
+// Blueberry
+import blueberry from "../assets/images/blueberries-1.png";
+import blueBerry2 from "../assets/images/blueberry-2.jpeg";
+
+// Dragon fruit
+import dragonFruit from "../assets/images/dragonfruit-1.png";
+import redFlesh from "../assets/images/red-flesh.png";
+import whiteFlesh from "../assets/images/white-flesh.jpg";
+
 // Tamarind
 import tamarind from "../assets/images/Tamarind.png";
 import sweetTamarind from "../assets/images/sweetTamarind.webp";
@@ -335,7 +354,7 @@ export const FRUITS: Record<string, FruitData> = {
     intro:
       "Picked at a firm 'breaker' stage and finished at ambient temperature, since a tree-ripened plum bruises before it can travel. Skin colour is a rough guide to variety, not ripeness — the giveaway is a gentle give at the seam.",
     shape: "single",
-    heroImage: "/images/fruits/plum-hero.jpg",
+    heroImage: plums,
     thumbnail: "/images/fruits/plum-thumb.jpg",
     accent: "#7B3F61",
     deep: "#2E1220",
@@ -346,13 +365,13 @@ export const FRUITS: Record<string, FruitData> = {
         code: "BA-01",
         name: "Black Amber Plum",
         blurb: "Deep purple-black skin over amber-gold flesh.",
-        image: "/images/fruits/varieties/plum-black-amber.jpg",
+        image: blackPlum,
       },
       {
         code: "SR-02",
         name: "Red Plum / Santa Rosa",
         blurb: "Tart red skin, sweet flesh — the classic backyard plum.",
-        image: "/images/fruits/varieties/plum-santa-rosa.jpg",
+        image: redPlum,
       },
     ],
   },
@@ -407,7 +426,7 @@ export const FRUITS: Record<string, FruitData> = {
     intro:
       "Grown on a climbing cactus and picked only after the leathery skin turns fully pink, since the fruit doesn't ripen further once cut. Flesh colour has nothing to do with skin colour — it's a separate trait bred into each variety.",
     shape: "single",
-    heroImage: "/images/fruits/dragonfruit-hero.jpg",
+    heroImage: dragonFruit,
     thumbnail: "/images/fruits/dragonfruit-thumb.jpg",
     accent: "#C43C7A",
     deep: "#3A0F22",
@@ -418,13 +437,13 @@ export const FRUITS: Record<string, FruitData> = {
         code: "WF-01",
         name: "White Flesh",
         blurb: "Mild and melon-like, studded with tiny edible black seeds.",
-        image: "/images/fruits/varieties/dragonfruit-white-flesh.jpg",
+        image: whiteFlesh,
       },
       {
         code: "RF-02",
         name: "Red Flesh",
         blurb: "Deeper in colour and sweetness, with a faint berry note.",
-        image: "/images/fruits/varieties/dragonfruit-red-flesh.jpg",
+        image: redFlesh,
       },
     ],
   },
@@ -461,7 +480,7 @@ export const FRUITS: Record<string, FruitData> = {
     intro:
       "An avocado left on the tree can stay hard for months and only begins to soften once picked — growers use that quirk as living cold storage. Fruit ships mature but hard, then ripens in staged batches to order.",
     shape: "single",
-    heroImage: "/images/fruits/avocado-hero.jpg",
+    heroImage: avacado1,
     thumbnail: "/images/fruits/avocado-thumb.jpg",
     accent: "#4C6B34",
     deep: "#1D2A13",
@@ -472,7 +491,7 @@ export const FRUITS: Record<string, FruitData> = {
         code: "HS-01",
         name: "Hass",
         blurb: "Pebbled skin, the global standard.",
-        image: "/images/fruits/varieties/avocado-hass.jpg",
+        image: avacado2,
       },
     ],
   },
@@ -485,7 +504,7 @@ export const FRUITS: Record<string, FruitData> = {
     intro:
       "Machine and hand harvested depending on end use — hand-picked fruit holds its bloom and goes to the fresh punnet, machine-picked goes to processing. Kept cold within the hour, since bruised fruit weeps and spoils the whole tray.",
     shape: "cluster",
-    heroImage: "/images/fruits/blueberry-hero.jpg",
+    heroImage: blueberry,
     thumbnail: "/images/fruits/blueberry-thumb.jpg",
     accent: "#3B4A8C",
     deep: "#141A33",
@@ -497,7 +516,7 @@ export const FRUITS: Record<string, FruitData> = {
         name: "Blueberry",
         blurb:
           "Wild-hearted and thin-skinned, at their best straight from the punnet.",
-        image: "/images/fruits/varieties/blueberry.jpg",
+        image: blueBerry2,
       },
     ],
   },

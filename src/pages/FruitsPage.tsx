@@ -126,7 +126,7 @@ function FruitHero({
   reduceMotion: boolean;
 }) {
   const ref = useRef<HTMLElement>(null);
-  const [imgError, setImgError] = useState(false);
+  const [, setImgError] = useState(false);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
