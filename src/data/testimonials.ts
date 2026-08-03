@@ -6,15 +6,15 @@ interface Testimonial {
 
 export const Testimonials: Testimonial[] = [
   {
-    title: "Excellent Support",
-    quote:
-      "Fruits, which we bought here are fresh and feels like they were very perfectly cultivated without pesticides. We are not buying at any other places after we start buying friuts here because the taste and freshness is very evident when we are having them.",
-    name: "Manish Joshi",
-  },
-  {
     title: "Best Quality Ever",
     quote:
-      "I appreciate the convenience of being able to purchase fresh fruits at RB Fruitech, as the vendor is located in a convenient location. The prices are reasonable, and feel that they get good value for their money. Overall, I have had positive experiences at RB Fruitech, praising the high quality and freshness of the fruits offered.",
-    name: "Sumit Bajaj",
+      "We have been sourcing premium fruits from OMM Agri Villa, and the quality has always been exceptional. Every shipment is fresh, well-packed, and carefully inspected before delivery. Their commitment to consistency and premium standards makes them a reliable business partner.",
+    name: "Rohit Sharma",
+  },
+  {
+    title: "Exceptional Quality & Service",
+    quote:
+      "OMM Agri Villa delivers outstanding quality with every order. The freshness, taste, and presentation of the fruits are consistently excellent. Their professional approach, prompt communication, and focus on quality make them one of the most trusted names in the fruit industry.",
+    name: "Amit Verma",
   },
 ];

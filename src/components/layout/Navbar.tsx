@@ -1,23 +1,22 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { Menu, X, Search } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 
-import logo from "../../assets/images/logonew.png";
+import logo from "../../assets/images/OAVLOGO.png";
+import { scrollToSection } from "../../utils/scrollToSection";
 
 const PRIMARY = "#193768";
 
 const navLinks = [
-  { to: "/", label: "Home" },
-  { to: "/about-us", label: "About Us" },
-  { to: "/our-fruits", label: "Our Products" },
-  { to: "/our-leadership", label: "Our Leadership" },
-  { to: "/our-network", label: "Our Network" },
-  { to: "/blog", label: "Blogs" },
-  { to: "/contact-us", label: "Contact Us" },
+  { id: "home", label: "Home" },
+  { id: "about-us", label: "About Us" },
+  { id: "our-products", label: "Our Products" },
+  { id: "contact-us", label: "Contact Us" },
 ];
 
 const Navbar = () => {
   const [menu, setMenu] = useState(false);
+  const [activeId, setActiveId] = useState("home");
   const sidebarRef = useRef<HTMLDivElement>(null);
 
   // Close sidebar on outside click
@@ -43,6 +42,34 @@ const Navbar = () => {
     };
   }, [menu]);
 
+  // Scroll-spy: highlight the nav link for the section currently in view
+  useEffect(() => {
+    const sections = navLinks
+      .map((link) => document.getElementById(link.id))
+      .filter((el): el is HTMLElement => el !== null);
+
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveId(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: "-40% 0px -55% 0px", threshold: 0 },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
+  const handleNavClick = (id: string) => {
+    setMenu(false);
+    scrollToSection(id);
+  };
+
   return (
     <nav className="fixed top-0 left-0 w-full bg-white shadow-sm h-20 z-50">
       <div className="max-w-7xl mx-auto h-full flex items-center justify-between px-6 md:px-8">
@@ -50,53 +77,46 @@ const Navbar = () => {
         <Link
           to="/"
           className="flex items-center gap-3"
-          onClick={() => setMenu(false)}
+          onClick={(e) => {
+            e.preventDefault();
+            handleNavClick("home");
+          }}
         >
-          <img src={logo} alt="logo" className="w-12 h-12 object-contain" />
-          {/* <span
-            className="text-2xl md:text-3xl font-bold tracking-wide"
-          >
-            OMM AGRI
-          </span> */}
+          <img src={logo} alt="logo" className="w-32 h-32 object-contain" />
         </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-10">
-          {navLinks.map((link) => (
-            <NavLink key={link.to} to={link.to} className="relative group pb-1">
-              {({ isActive }) => (
-                <>
-                  <span
-                    className={`font-bold transition-colors duration-200 group-hover:text-[#193768] ${
-                      isActive ? "font-bold text-[#193768]" : "text-black"
-                    }`}
-                  >
-                    {link.label}
-                  </span>
-                  <span
-                    className={`absolute left-0 -bottom-5 h-1 w-full transition-transform duration-400 ease-out ${
-                      isActive
-                        ? "scale-x-100 origin-left"
-                        : "scale-x-0 origin-right group-hover:origin-left group-hover:scale-x-100"
-                    }`}
-                    style={{ backgroundColor: PRIMARY }}
-                  />
-                </>
-              )}
-            </NavLink>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = activeId === link.id;
+            return (
+              <button
+                key={link.id}
+                onClick={() => handleNavClick(link.id)}
+                className="relative group pb-1"
+              >
+                <span
+                  className={`font-bold transition-colors duration-200 group-hover:text-[#193768] ${
+                    isActive ? "font-bold text-[#193768]" : "text-black"
+                  }`}
+                >
+                  {link.label}
+                </span>
+                <span
+                  className={`absolute left-0 -bottom-5 h-1 w-full transition-transform duration-400 ease-out ${
+                    isActive
+                      ? "scale-x-100 origin-left"
+                      : "scale-x-0 origin-right group-hover:origin-left group-hover:scale-x-100"
+                  }`}
+                  style={{ backgroundColor: PRIMARY }}
+                />
+              </button>
+            );
+          })}
         </div>
 
         {/* Right side: search + CTA (desktop) / burger (mobile) */}
         <div className="flex items-center gap-4">
-          <button
-            aria-label="Search"
-            className="hidden md:flex items-center justify-center w-10 h-10 rounded-full border transition-colors"
-            style={{ borderColor: "#e5e7eb", color: PRIMARY }}
-          >
-            <Search size={18} />
-          </button>
-
           {/* Mobile burger */}
           <button
             className="md:hidden relative w-8 h-8 flex items-center justify-center"
@@ -119,6 +139,7 @@ const Navbar = () => {
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
         }`}
+        onClick={() => setMenu(false)}
       />
 
       {/* Mobile sidebar panel */}
@@ -132,7 +153,10 @@ const Navbar = () => {
           <Link
             to="/"
             className="flex items-center gap-2"
-            onClick={() => setMenu(false)}
+            onClick={(e) => {
+              e.preventDefault();
+              handleNavClick("home");
+            }}
           >
             <img src={logo} alt="logo" className="w-10 h-10 object-contain" />
             {/* <span className="font-bold text-lg" style={{ color: PRIMARY }}>
@@ -153,23 +177,21 @@ const Navbar = () => {
         </div>
 
         <div className="flex flex-col">
-          {navLinks.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              onClick={() => setMenu(false)}
-              className={({ isActive }) =>
-                `px-6 py-4 border-b border-gray-100 font-medium transition-colors ${
+          {navLinks.map((link) => {
+            const isActive = activeId === link.id;
+            return (
+              <button
+                key={link.id}
+                onClick={() => handleNavClick(link.id)}
+                className={`text-left px-6 py-4 border-b border-gray-100 font-medium transition-colors ${
                   isActive ? "" : "text-gray-800 hover:text-[#193768]"
-                }`
-              }
-              style={({ isActive }) => ({
-                color: isActive ? PRIMARY : undefined,
-              })}
-            >
-              {link.label}
-            </NavLink>
-          ))}
+                }`}
+                style={{ color: isActive ? PRIMARY : undefined }}
+              >
+                {link.label}
+              </button>
+            );
+          })}
         </div>
       </div>
     </nav>

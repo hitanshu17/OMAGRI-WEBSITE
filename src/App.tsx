@@ -1,26 +1,33 @@
-import { Route, Routes } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
 
-import MainLayout from "./layout/MainLayout"
-import HomePage from "./pages/HomePage";
-import About from "./pages/About";
-import FruitsPage from "./pages/OurFruits";
-import ContactUs from "./pages/ContactUs";
-import LeadershipPage from "./pages/LeadershipPage";
-import NetworkPage from "./pages/NetworkPage";
+import MainLayout from "./layout/MainLayout";
+import LandingPage from "./pages/LandingPage";
+import FruitPage from "./pages/FruitsPage";
+import LoadingPage from "./pages/LoadingPage";
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Replace with your real readiness check — initial data fetch,
+    // asset preload, auth check, etc.
+    const t = setTimeout(() => setIsLoading(false), 2000);
+    return () => clearTimeout(t);
+  }, []);
+
   return (
-    <Routes>
-      <Route element={<MainLayout />}>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/about-us" element={<About />} />
-        <Route path="/our-fruits" element={<FruitsPage />} />
-        <Route path="/our-leadership" element={<LeadershipPage />} />
-        <Route path="/our-network" element={<NetworkPage />} />
-        <Route path="/contact-us" element={<ContactUs />} />
-      </Route>
-    </Routes>
+    <>
+      <Routes>
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<LandingPage />} />
+        </Route>
+        <Route path="/:fruitName" element={<FruitPage />} />
+      </Routes>
+
+      <LoadingPage isLoading={isLoading} />
+    </>
   );
 }
 
-export default App
+export default App;
