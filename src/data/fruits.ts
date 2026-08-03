@@ -26,6 +26,15 @@ import rhm from "../assets/images/royalhoney.avif"
 import nova from "../assets/images/nova.webp"
 import tango from "../assets/images/tango.webp"
 
+// grapes
+import grape1 from "../assets/images/grape-1.webp";
+import redglobe from "../assets/images/redglobe.jpg";
+import autumn from "../assets/images/autumn.jpeg";
+import shineMuscat from "../assets/images/shinemuscat.webp";
+import blackGrape from "../assets/images/black-grape.jpg";
+import scarlet from "../assets/images/scarlet-grapes.jpeg"
+
+
 // Cherry
 import cherry from "../assets/images/cherry0.png"
 import cherry2 from "../assets/images/cherry-2.webp"
@@ -288,7 +297,7 @@ export const FRUITS: Record<string, FruitData> = {
     intro:
       "Packed by the stem, never loose — the pale bloom on each berry is a natural wax the vine produces to seal in moisture. Northern and southern-hemisphere harvests overlap to keep a fragile fruit permanently in season.",
     shape: "cluster",
-    heroImage: "/images/fruits/grape-hero.jpg",
+    heroImage: grape1,
     thumbnail: "/images/fruits/grape-thumb.jpg",
     accent: "#6C4396",
     deep: "#241536",
@@ -300,31 +309,31 @@ export const FRUITS: Record<string, FruitData> = {
         name: "Red Globe",
         blurb:
           "Large, thick-skinned berries bred to survive long-distance shipping without splitting.",
-        image: "/images/fruits/varieties/grape-red-globe.jpg",
+        image: redglobe,
       },
       {
         code: "SM-02",
         name: "Shine Muscat",
         blurb: "Pale green, floral, and famously crisp.",
-        image: "/images/fruits/varieties/grape-shine-muscat.jpg",
+        image: shineMuscat,
       },
       {
         code: "SR-03",
         name: "Scarlet Royal",
         blurb: "Large, firm, deep red berries built for late season.",
-        image: "/images/fruits/varieties/grape-scarlet-royal.jpg",
+        image: scarlet,
       },
       {
         code: "AR-04",
         name: "Autumn Royal",
         blurb: "Seedless and jet-black, harvested late in the season.",
-        image: "/images/fruits/varieties/grape-autumn-royal.jpg",
+        image: autumn,
       },
       {
         code: "BS-05",
         name: "Black Seedless",
         blurb: "Sweet, dark-skinned, no seeds to slow you down.",
-        image: "/images/fruits/varieties/grape-black-seedless.jpg",
+        image: blackGrape,
       },
     ],
   },
