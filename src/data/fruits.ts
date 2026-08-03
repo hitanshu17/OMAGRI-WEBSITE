@@ -19,6 +19,13 @@ import queen from "../assets/images/queen.jpeg";
 import pinkLady from "../assets/images/Pink-Lady-Apple.jpg";
 import green from "../assets/images/green.jpg";
 
+// mandarins
+import mandarin from "../assets/images/mandarin-tr.webp"
+import nodorcott from "../assets/images/nodorcott.jpg"
+import rhm from "../assets/images/royalhoney.avif"
+import nova from "../assets/images/nova.webp"
+import tango from "../assets/images/tango.webp"
+
 // Cherry
 import cherry from "../assets/images/cherry0.png"
 import cherry2 from "../assets/images/cherry-2.webp"
@@ -239,7 +246,7 @@ export const FRUITS: Record<string, FruitData> = {
     intro:
       "Picked by hand and never washed too hard — the loose, fragrant skin bruises if it's handled like an orange. Season runs early autumn through winter across overlapping varieties bred for different weeks of the calendar.",
     shape: "citrus",
-    heroImage: "/images/fruits/mandarin-hero.jpg",
+    heroImage: mandarin,
     thumbnail: "/images/fruits/mandarin-thumb.jpg",
     accent: "#EA8C1D",
     deep: "#5E3208",
@@ -250,25 +257,25 @@ export const FRUITS: Record<string, FruitData> = {
         code: "ND-01",
         name: "Nadorcott",
         blurb: "Easy-peel and seedless, a late-season mandarin.",
-        image: "/images/fruits/varieties/mandarin-nadorcott.jpg",
+        image: nodorcott,
       },
       {
         code: "RM-02",
         name: "Royal Honey Murcott",
         blurb: "Honeyed sweetness under a thin, glossy skin.",
-        image: "/images/fruits/varieties/mandarin-royal-honey-murcott.jpg",
+        image: rhm,
       },
       {
         code: "NV-03",
         name: "Nova",
         blurb: "An early mandarin, tangy and bright.",
-        image: "/images/fruits/varieties/mandarin-nova.jpg",
+        image: nova,
       },
       {
         code: "TG-04",
         name: "Tango",
         blurb: "Seedless by design, bred for the lunchbox.",
-        image: "/images/fruits/varieties/mandarin-tango.jpg",
+        image: tango,
       },
     ],
   },
