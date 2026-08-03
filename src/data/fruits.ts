@@ -19,6 +19,12 @@ import queen from "../assets/images/queen.jpeg";
 import pinkLady from "../assets/images/Pink-Lady-Apple.jpg";
 import green from "../assets/images/green.jpg";
 
+// Cherry
+import cherry from "../assets/images/cherry0.png"
+import cherry2 from "../assets/images/cherry-2.webp"
+import cherry3 from "../assets/images/cherry-3.jpg"
+import cherry4 from "../assets/images/cherry-3.jpeg"
+
 // Plums
 import plums from "../assets/images/plums.webp";
 import blackPlum from "../assets/images/black-plum.jpg";
@@ -384,7 +390,7 @@ export const FRUITS: Record<string, FruitData> = {
     intro:
       "Cut from the tree by the stem, never pulled — a torn stem opens the fruit to rot within days. Cold-chained from orchard to shelf almost immediately, since cherries don't ripen further once picked.",
     shape: "cluster",
-    heroImage: "/images/fruits/cherry-hero.jpg",
+    heroImage: cherry,
     thumbnail: "/images/fruits/cherry-thumb.jpg",
     accent: "#9B1B30",
     deep: "#3A0A12",
@@ -395,25 +401,25 @@ export const FRUITS: Record<string, FruitData> = {
         code: "BG-01",
         name: "Bing",
         blurb: "Deep red-black, firm, the standard-bearer of sweet cherries.",
-        image: "/images/fruits/varieties/cherry-bing.jpg",
+        image: cherry2,
       },
       {
         code: "RG-02",
         name: "Regina",
         blurb: "Late-season and firm, resistant to splitting in the rain.",
-        image: "/images/fruits/varieties/cherry-regina.jpg",
+        image: cherry3,
       },
       {
         code: "ST-03",
         name: "Santina",
         blurb: "Early-season, glossy black-red, and self-fertile on the tree.",
-        image: "/images/fruits/varieties/cherry-santina.jpg",
+        image: cherry2,
       },
       {
         code: "LP-04",
         name: "Lapins",
         blurb: "Large, dark, and sweet — a self-pollinating variety.",
-        image: "/images/fruits/varieties/cherry-lapins.jpg",
+        image: cherry4,
       },
     ],
   },
