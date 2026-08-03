@@ -1,9 +1,9 @@
 import React from "react";
 import { Check, Mail, Phone } from "lucide-react";
-import aboutImage from "../assets/images/about-rb.png";
+import aboutImage from "../assets/images/about-fruit.png";
 import { missionVisionData } from "../data/mission";
 import { leaders } from "../data/aboutContent";
-import map from "../assets/images/world-map.jpg";
+import map from "../assets/images/world-map2.webp";
 import PresenceInIndia from "../components/ui/Presence";
 import indiaMap from "../assets/images/India.png";
 import WhyChooseUs from "../components/ui/WhyChooseUs";
@@ -139,7 +139,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
               </div>
 
               {/* Contact footer */}
-              <div className="mt-auto space-y-2.5 border-t border-[#193768]/10 bg-[#193768]/[0.03] px-8 py-5 text-left">
+              <div className="mt-auto space-y-2.5 border-t border-[#193768]/10 bg-[#193768]/3 px-8 py-5 text-left">
                 <div className="flex items-center gap-3 text-sm text-[#344054]">
                   <Phone className="h-4 w-4 shrink-0 text-[#193768]" />
                   <span>{leader.phone}</span>

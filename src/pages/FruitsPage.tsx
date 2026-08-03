@@ -53,100 +53,6 @@ function BackButton() {
   );
 }
 
-function FruitGlyph({ fruit, size = 1 }: { fruit: FruitData; size?: number }) {
-  const { accent, deep, shape } = fruit;
-  const w = 260 * size;
-
-  if (shape === "cluster") {
-    const positions: [number, number][] = [
-      [0.5, 0.06],
-      [0.28, 0.22],
-      [0.72, 0.22],
-      [0.14, 0.42],
-      [0.5, 0.4],
-      [0.86, 0.42],
-      [0.3, 0.62],
-      [0.7, 0.62],
-      [0.5, 0.8],
-    ];
-    return (
-      <div
-        style={{ position: "relative", width: w, height: w * 1.15 }}
-        aria-hidden="true"
-      >
-        <div
-          style={{
-            position: "absolute",
-            left: "46%",
-            top: 0,
-            width: 3,
-            height: w * 0.12,
-            background: deep,
-            borderRadius: 2,
-          }}
-        />
-        {positions.map(([x, y], i) => (
-          <div
-            key={i}
-            style={{
-              position: "absolute",
-              left: `calc(${x * 100}% - ${w * 0.11}px)`,
-              top: `calc(${y * 100}% + ${w * 0.1}px)`,
-              width: w * 0.22,
-              height: w * 0.22,
-              borderRadius: "50%",
-              background: `radial-gradient(circle at 32% 28%, ${accent}, ${deep})`,
-              boxShadow: "inset -4px -6px 14px rgba(0,0,0,0.35)",
-            }}
-          />
-        ))}
-      </div>
-    );
-  }
-
-  return (
-    <div
-      style={{ position: "relative", width: w, height: w }}
-      aria-hidden="true"
-    >
-      <div
-        style={{
-          position: "absolute",
-          left: "54%",
-          top: -w * 0.02,
-          width: w * 0.22,
-          height: w * 0.13,
-          background: `linear-gradient(120deg, ${accent}55, #6B8E23)`,
-          borderRadius: "0% 100% 40% 60% / 0% 100% 20% 100%",
-          transform: "rotate(20deg)",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          borderRadius:
-            shape === "citrus" ? "50%" : "48% 52% 46% 54% / 58% 54% 46% 42%",
-          background: `radial-gradient(circle at 34% 30%, ${accent}, ${deep} 78%)`,
-          boxShadow:
-            "inset -14px -18px 40px rgba(0,0,0,0.4), 0 30px 60px -20px rgba(0,0,0,0.5)",
-        }}
-      />
-      {shape === "citrus" && (
-        <div
-          style={{
-            position: "absolute",
-            inset: "6%",
-            borderRadius: "50%",
-            opacity: 0.18,
-            background: `repeating-conic-gradient(${deep} 0deg 3deg, transparent 3deg 30deg)`,
-          }}
-        />
-      )}
-    </div>
-  );
-}
-
 /* ------------------------------------------------------------------ */
 /*  TiltLayer — wraps the hero photo/glyph, tilts it in 3D toward     */
 /*  the cursor. Spring-smoothed, subtle range, mouse-only, disabled   */
@@ -256,40 +162,23 @@ function FruitHero({
         }}
       >
         <motion.div
-          className="absolute right-0 top-0 h-full w-full sm:w-2/3"
-          style={{ scale, y: imgY }}
+          className="absolute right-[6%] top-1/2 -translate-y-1/2 hidden sm:block"
+          style={{ scale, y: imgY, width: "36%", aspectRatio: "1 / 1" }}
         >
           <TiltLayer reduceMotion={reduceMotion}>
-            {!imgError ? (
-              <img
-                src={fruit.heroImage}
-                alt=""
-                role="presentation"
-                fetchPriority="high"
-                loading="eager"
-                decoding="async"
-                className="h-full w-full object-cover"
-                onError={() => setImgError(true)}
-              />
-            ) : (
-              // Fallback renders at every breakpoint, not just mobile —
-              // previously this only showed below `sm`, so a 404'd photo
-              // left desktop visitors with an empty gradient.
-              <div className="flex h-full w-full items-center justify-center">
-                <FruitGlyph fruit={fruit} size={1.3} />
-              </div>
-            )}
-            {!imgError && (
-              <div className="absolute right-[8%] top-1/2 -translate-y-1/2 sm:hidden">
-                <FruitGlyph fruit={fruit} size={1.1} />
-              </div>
-            )}
+            <img
+              src={fruit.heroImage}
+              alt=""
+              role="presentation"
+              fetchPriority="high"
+              loading="eager"
+              decoding="async"
+              className="h-full w-full object-cover"
+              onError={() => setImgError(true)}
+            />
           </TiltLayer>
         </motion.div>
 
-        {/* Static veil: guarantees title legibility regardless of scroll
-            position or how bright the photo is. The scroll-linked scrim
-            below adds extra darkening as the section pins/scrolls. */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -306,6 +195,12 @@ function FruitHero({
           style={{ opacity: titleOpacity, y: titleY }}
           className="relative z-10 max-w-4xl px-6 sm:px-10 lg:px-16"
         >
+          {/* <p
+            className="mb-4 font-mono text-xs tracking-[0.25em] uppercase"
+            style={{ color: fruit.accent }}
+          >
+            {fruit.eyebrow}
+          </p> */}
           <h1
             className="leading-[0.85] font-bold text-white"
             style={{
@@ -316,13 +211,13 @@ function FruitHero({
           >
             {fruit.name}
           </h1>
-          <p
+          {/* <p
             className="mt-6 max-w-md text-lg sm:text-xl italic text-white/70"
             style={{ fontFamily: "'Fraunces', serif" }}
           >
             {fruit.tagline}
-          </p>
-          <p className="mt-5 max-w-xl text-sm sm:text-base leading-relaxed text-white/55">
+          </p> */}
+          <p className="mt-8 max-w-xl text-sm sm:text-base leading-relaxed text-white/55">
             {fruit.intro}
           </p>
           <div className="mt-10 flex items-center gap-4">
@@ -332,9 +227,9 @@ function FruitHero({
             >
               Enquire about {fruit.name}
             </button>
-            <span className="text-white/50 text-sm hidden sm:inline">
+            {/* <span className="text-white/50 text-sm hidden sm:inline">
               Scroll to explore ↓
-            </span>
+            </span> */}
           </div>
         </motion.div>
       </div>
@@ -399,13 +294,13 @@ function VarietyCard({
       </div>
       <div className="p-6">
         <div className="flex items-center justify-between mb-4">
-          <span
+          {/* <span
             className="w-2.5 h-2.5 rounded-full"
             style={{ background: accent }}
-          />
-          <span className="font-mono text-[10px] tracking-widest text-white/40">
+          /> */}
+          {/* <span className="font-mono text-[10px] tracking-widest text-white/40">
             {variety.code}
-          </span>
+          </span> */}
         </div>
         <h3
           className="text-white font-semibold text-lg mb-2"
@@ -508,8 +403,8 @@ function useProgressScrollRef() {
 /**
  * Route: /:fruitName  →  e.g. /apple, /mandarin, /kiwi
  *   { path: "/:fruitName", element: <FruitPage /> }
- * Lazy-load it at the router level (React.lazy + Suspense) so the
- * animation code only ships to visitors who land on a fruit page.
+ * Lazy-loaded at the router level (see App.tsx) so this animation
+ * code only ships to visitors who land on a fruit page.
  */
 export default function FruitPage() {
   const { fruitName } = useParams<{ fruitName: string }>();
@@ -519,8 +414,7 @@ export default function FruitPage() {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   if (!fruit) {
-    // Unknown slug — send them somewhere real instead of a blank page.
-    return <Navigate to="/fruits" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return (

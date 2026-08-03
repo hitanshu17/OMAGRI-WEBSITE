@@ -78,21 +78,21 @@ const InfiniteLogoCarousel: React.FC<InfiniteLogoCarouselProps> = ({
     <div className="group relative w-full overflow-hidden">
       {/* Edge fades so logos don't hard-cut at the container edge */}
       <div
-        className={`pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-linear-to-r ${fadeClass.l} to-transparent sm:w-24 md:w-32`}
+        className={`pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-linear-to-r ${fadeClass.l} to-transparent sm:w-16 md:w-24 lg:w-32`}
       />
       <div
-        className={`pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-linear-to-l ${fadeClass.r} to-transparent sm:w-24 md:w-32`}
+        className={`pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-linear-to-l ${fadeClass.r} to-transparent sm:w-16 md:w-24 lg:w-32`}
       />
 
       <div
-        className="flex w-max items-center gap-12 sm:gap-16 md:gap-20 group-hover:[animation-play-state:paused]"
+        className="flex w-max items-center gap-8 sm:gap-12 md:gap-16 lg:gap-20 group-hover:[animation-play-state:paused]"
         style={{ animation: `${animationName} ${speed}s linear infinite` }}
       >
         {/* Logos rendered twice back-to-back for a seamless loop */}
         {[...logos, ...logos].map((logo, i) => (
           <div
             key={`${logo.alt}-${i}`}
-            className="relative z-0 flex shrink-0 items-center justify-center transition-transform duration-300 ease-out hover:z-20 hover:scale-125 sm:h-16 md:h-20"
+            className="relative z-0 flex h-10 shrink-0 items-center justify-center transition-transform duration-300 ease-out hover:z-20 hover:scale-125 sm:h-14 md:h-16 lg:h-20"
           >
             <img
               src={logo.src}
@@ -137,22 +137,22 @@ const LogoSection: React.FC<LogoSectionProps> = ({
 }) => {
   return (
     <section
-      className={`px-6 py-16 md:px-12 lg:px-20 ${
+      className={`px-4 py-10 sm:px-6 sm:py-12 md:px-12 md:py-16 lg:px-20 ${
         background === "gray" ? "bg-gray-100" : "bg-white"
       }`}
     >
       <div className="mx-auto max-w-7xl text-center">
         {/* Eyebrow */}
-        <div className="mb-3 flex items-center justify-center gap-3">
-          <span className="h-0.5 w-8 bg-[#193768]" />
-          <span className="font-semibold tracking-wide text-[#193768]">
+        <div className="mb-2 flex items-center justify-center gap-2 sm:mb-3 sm:gap-3">
+          <span className="h-0.5 w-6 bg-[#193768] sm:w-8" />
+          <span className="text-sm font-semibold tracking-wide text-[#193768] sm:text-base">
             {eyebrow}
           </span>
-          <span className="w-8 h-0.5 bg-[#193768]" />
+          <span className="h-0.5 w-6 bg-[#193768] sm:w-8" />
         </div>
 
         {/* Heading */}
-        <h2 className="mb-14 text-4xl font-extrabold text-slate-900 sm:text-5xl">
+        <h2 className="mb-8 text-2xl font-extrabold text-slate-900 sm:mb-10 sm:text-3xl md:mb-14 md:text-4xl lg:text-5xl">
           {heading}
         </h2>
 

@@ -7,50 +7,67 @@ import kiwi from "../assets/images/kiwi-fruit.jpeg";
 import grape from "../assets/images/grape-fruit.jpg";
 import pears from "../assets/images/pears.jpg";
 import avacado from "../assets/images/avacado-fruit.jpg";
+import mandarin from "../assets/images/mandarin.jpg";
+import plum from "../assets/images/plum.webp";
+import cherry from "../assets/images/cherry.jpg";
+import blueberry from "../assets/images/blueberry.webp";
+import dragonfruit from "../assets/images/Dragonfruit.webp";
+import tamarind from "../assets/images/tamarind.avif";
+
+import FruitCalendarPopup from "../components/ui/FruitCalendarPopup";
 
 const featuredCards = [
   {
-    key: "apples",
-    slug: "apple",
-    theme: "light",
-    eyebrow: "Marquee Selection",
-    title: "Premium Apples",
-    desc: "Sourced from the high-altitude orchards of New Zealand and Italy, ensuring unparalleled crunch and sweetness…",
-    image: apple,
-    tags: ["Gala", "Fuji", "Pink Lady"],
+    key: "kiwi",
+    slug: "kiwi",
+    theme: "dark",
+    eyebrow: "Hayat Kiwi",
+    title: "Hayat Kiwi",
+    desc: "Grown under the Hayat label and ripened on a fixed schedule rather than in transit, for a tender core and consistent sweetness in every crate.",
+    image: kiwi,
+    tags: ["Hayward Kiwi", "Golden Kiwi"],
     cta: "Explore Varieties",
   },
   {
     key: "citrus",
-    slug: "mandarin",
+    slug: "orange",
     theme: "dark",
     eyebrow: "Bestseller",
     title: "Global Citrus",
-    desc: "Sun-drenched oranges and lemons from South Africa and Egypt, known for high juice content and vibrant essential oils.",
+    desc: "Sun-drenched oranges from South Africa and Egypt, known for high juice content and vibrant essential oils.",
     image: orange,
-    tags: ["Valencia", "Navel"],
+    tags: ["Valencia", "Navel", "Midnight Valencia"],
     cta: "View Harvest Calendar",
   },
 ];
 
 const produceCards = [
   {
-    key: "kiwis",
-    slug: "kiwi",
+    key: "apples",
+    slug: "apple",
     theme: "light",
-    title: "Zesty Kiwis",
-    desc: "Imported gold and green varieties with rich antioxidant density.",
-    image: kiwi,
-    tag: "Zespri Gold",
+    title: "Crisp Apples",
+    desc: "Firm, cold-stored apples available year round across sweet and tart varieties.",
+    image: apple,
+    tag: "Gala · Fuji · Pink Lady",
+  },
+  {
+    key: "mandarins",
+    slug: "mandarin",
+    theme: "light",
+    title: "Sweet Mandarins",
+    desc: "Loose-skinned, easy-peel mandarins bred for a long, overlapping season.",
+    image: mandarin,
+    tag: "Nadorcott · Murcott · Tango",
   },
   {
     key: "grapes",
-    slug: "grapes",
+    slug: "grape",
     theme: "light",
     title: "Table Grapes",
     desc: "Crisp, seedless varieties from premium vines.",
     image: grape,
-    tag: "Thompson · Crimson",
+    tag: "Red Globe · Shine Muscat",
   },
   {
     key: "pears",
@@ -59,7 +76,25 @@ const produceCards = [
     title: "Heritage Pears",
     desc: "Firm-fleshed varieties with excellent shelf life and travel durability.",
     image: pears,
-    tag: "Packham · Anjou",
+    tag: "Packham's Triumph · Red Anjou",
+  },
+  {
+    key: "plums",
+    slug: "plum",
+    theme: "light",
+    title: "Stone Fruit Plums",
+    desc: "Firm-picked and finished off the tree, with skin colour ranging from deep black to bright red.",
+    image: plum,
+    tag: "Black Amber · Santa Rosa",
+  },
+  {
+    key: "cherries",
+    slug: "cherry",
+    theme: "dark",
+    title: "Sweet Cherries",
+    desc: "Stem-cut and cold-chained fast, spanning a full spread of early to late-season varieties.",
+    image: cherry,
+    tag: "Bing · Regina · Lapins",
   },
   {
     key: "avocados",
@@ -69,6 +104,33 @@ const produceCards = [
     desc: "Creamy Hass avocados sourced for perfect ripeness consistency.",
     image: avacado,
     tag: "Hass Premium",
+  },
+  {
+    key: "blueberries",
+    slug: "blueberry",
+    theme: "dark",
+    title: "Blueberries",
+    desc: "Hand-picked, thin-skinned, and cold-chained within the hour of harvest.",
+    image: blueberry,
+    tag: "Fresh Punnet",
+  },
+  {
+    key: "dragonfruit",
+    slug: "dragonfruit",
+    theme: "dark",
+    title: "Dragon Fruit",
+    desc: "Cactus-grown and cut at peak colour, in both white and red-fleshed varieties.",
+    image: dragonfruit,
+    tag: "White Flesh · Red Flesh",
+  },
+  {
+    key: "tamarind",
+    slug: "tamarind",
+    theme: "light",
+    title: "Sweet Tamarind",
+    desc: "A sweeter pod variety bred for eating fresh, with dense, honeyed pulp.",
+    image: tamarind,
+    tag: "Sweet Tamarind",
   },
 ];
 
@@ -169,16 +231,32 @@ const OurProducts = () => {
 
                 <div className="relative">
                   <h3 className="font-semibold text-white">{card.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-white/70">
+                  {/* <p className="mt-2 text-sm leading-relaxed text-white/70">
                     {card.desc}
-                  </p>
-                  <span className="mt-3 block text-[11px] font-semibold uppercase tracking-widest text-[#d97b3c]">
+                  </p> */}
+                  {/* <span className="mt-3 block text-[11px] font-semibold uppercase tracking-widest text-[#d97b3c]">
                     {card.tag}
-                  </span>
+                  </span> */}
                 </div>
               </div>
             </Link>
           ))}
+        </div>
+      </section>
+
+      {/* Seasonal Calendar popup */}
+      <section className="px-6 pb-20 md:px-16">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 rounded-2xl border border-slate-100 bg-slate-50/60 px-6 py-10 text-center">
+          <h3 className="text-xl font-bold text-slate-900">
+            Not sure what's in season?
+          </h3>
+          <p className="max-w-md text-sm text-slate-500">
+            Check month-by-month availability across our full fruit range before
+            you place an order.
+          </p>
+          <div className="mt-2">
+            <FruitCalendarPopup />
+          </div>
         </div>
       </section>
     </div>

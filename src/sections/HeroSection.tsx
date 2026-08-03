@@ -7,10 +7,10 @@ import {
   type MotionValue,
 } from "framer-motion";
 
-import kiwiWhole from "../assets/images/kiwi-whole.webp";
+import kiwiWhole from "../assets/images/Big-Kiwi.png";
 import kiwiPeeled from "../assets/images/kiwi-peeled.webp";
 import kiwiSliced from "../assets/images/kiwi-sliced.webp";
-import ommLogo from "../assets/images/OAVLOGO.png";
+// import ommLogo from "../assets/images/OAVLOGO.png";
 
 interface Stage {
   eyebrow: string;
@@ -26,7 +26,7 @@ const STAGES: Stage[] = [
     image: kiwiPeeled,
   },
   { eyebrow: "Every slice", title: "Perfected by nature.", image: kiwiSliced },
-  { eyebrow: "OMM Agri Vila LLP", title: "", image: kiwiSliced },
+  // { eyebrow: "OMM Agri Vila LLP", title: "", image: kiwiSliced },
 ];
 
 // This component is built for exactly 4 stages. If you ever need a
@@ -105,8 +105,8 @@ const HeroSection = () => {
     imageOpacity3,
   ];
 
-  const finalOpacity = imageOpacity3; // same range/shape as stage 3's image
-  const finalScale = useTransform(scrollYProgress, range3, [0.92, 1, 1]);
+  // const finalOpacity = imageOpacity3; // same range/shape as stage 3's image
+  // const finalScale = useTransform(scrollYProgress, range3, [0.92, 1, 1]);
 
   // Ghost numeral opacities — dimmed copies of the image opacities.
   // Unrolled for the same rules-of-hooks reason as above.
@@ -246,7 +246,7 @@ const HeroSection = () => {
         ))}
 
         {/* Final stage — OMM AGRI VILA LLP brand reveal */}
-        <motion.div
+        {/* <motion.div
           style={{ opacity: finalOpacity, scale: finalScale }}
           className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center gap-5 px-6"
         >
@@ -261,7 +261,7 @@ const HeroSection = () => {
           <p className="kiwi-label text-center text-[10px] text-white/45 sm:text-xs">
             SOURCING GLOBAL FRESHNESS, DELIVERING PREMIUM QUALITY
           </p>
-        </motion.div>
+        </motion.div> */}
 
         {/* Progress card, bottom-left */}
         <div className="absolute bottom-6 left-6 z-20 w-65 rounded-xl border border-white/10 bg-[#0c1310]/75 px-5 py-4 backdrop-blur-md sm:left-10 sm:bottom-10">
