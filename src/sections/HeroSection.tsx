@@ -369,8 +369,6 @@ const HeroSection = () => {
               />
             </AnimatePresence>
 
-            {/* Idle-floating, cursor-reactive droplets and leaves, riding
-                on the same fruit layer so they stay anchored to it */}
             {DROPLETS.map((d) => (
               <Droplet
                 key={d.id}
