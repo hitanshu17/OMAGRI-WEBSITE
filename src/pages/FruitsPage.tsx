@@ -1,4 +1,4 @@
-import { useRef, useState, createContext, useContext } from "react";
+import { useRef, useState, createContext } from "react";
 import { Navigate, useParams, useNavigate } from "react-router-dom";
 import {
   AnimatePresence,
@@ -372,29 +372,30 @@ function VarietiesGrid({
  *  covered `lg:` screens as a fallback for the chapter rail; now that
  *  the story chapters (and their rail) are gone, it's the one progress
  *  indicator for the whole page, on every breakpoint. */
-function ReadingProgressBar({ accent }: { accent: string }) {
-  const scrollRef = useProgressScrollRef();
-  const { scrollYProgress } = useScroll({ container: scrollRef });
-  const width = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-  return (
-    <div
-      className="fixed top-0 left-0 right-0 z-30 h-1 bg-white/10"
-      aria-hidden="true"
-    >
-      <motion.div className="h-full" style={{ width, background: accent }} />
-    </div>
-  );
-}
+// function ReadingProgressBar({ accent }: { accent: string }) {
+//   const scrollRef = useProgressScrollRef();
+//   const { scrollYProgress } = useScroll({ container: scrollRef });
+//   const width = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+//   return (
+//     <div
+//       className="fixed top-0 left-0 right-0 z-30 h-1 bg-white/10"
+//       aria-hidden="true"
+//     >
+//       <motion.div className="h-full" style={{ width, background: accent }} />
+//     </div>
+//   );
+// }
 
 // Small helper so ReadingProgressBar can share the same scroll container
 // ref as the page without prop-drilling a MotionValue down.
 const ScrollRefContext =
   createContext<React.RefObject<HTMLDivElement | null> | null>(null);
-function useProgressScrollRef() {
-  const ref = useContext(ScrollRefContext);
-  if (!ref) throw new Error("ReadingProgressBar must be used within FruitPage");
-  return ref;
-}
+
+//   function useProgressScrollRef() {
+//   const ref = useContext(ScrollRefContext);
+//   if (!ref) throw new Error("ReadingProgressBar must be used within FruitPage");
+//   return ref;
+// }
 
 /* ------------------------------------------------------------------ */
 /*  FruitPage — the actual /:fruitName route                          */
@@ -431,7 +432,7 @@ export default function FruitPage() {
       >
         <ScrollRefContext.Provider value={scrollRef}>
           <BackButton />
-          <ReadingProgressBar accent={fruit.accent} />
+          {/* <ReadingProgressBar accent={fruit.accent} /> */}
 
           <FruitHero fruit={fruit} reduceMotion={reduceMotion} />
 
