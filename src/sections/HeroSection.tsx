@@ -365,7 +365,7 @@ const HeroSection = () => {
                   filter:
                     "drop-shadow(0 25px 60px rgba(0,0,0,0.55)) drop-shadow(0 0 40px rgba(150,200,50,0.15))",
                 }}
-                className="absolute w-[76vw] max-w-[34rem] object-contain md:w-[48vw]"
+                className="absolute w-[76vw] max-w-136 object-contain md:w-[48vw]"
               />
             </AnimatePresence>
 
