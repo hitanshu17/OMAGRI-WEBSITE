@@ -1,4 +1,4 @@
-import { useRef, useState, createContext } from "react";
+import { useRef, useState, useEffect, createContext } from "react";
 import { Navigate, useParams, useNavigate } from "react-router-dom";
 import {
   AnimatePresence,
@@ -12,10 +12,18 @@ import {
 } from "framer-motion";
 import { getFruitBySlug, type FruitData, type Variety } from "../data/fruits";
 
-// Dark backdrop derived from the primary brand navy (#193768), used in
-// place of flat near-black for the varieties section and footer.
-const BRAND_DARK = "#0B1526";
+/* ------------------------------------------------------------------ */
+/*  Palette — warm, light theme (matches the "Apples" reference).      */
+/*  Everything else stays keyed off fruit.accent so each fruit still   */
+/*  gets its own character without a full re-theme per page.           */
+/* ------------------------------------------------------------------ */
 
+const PAGE_BG = "#FBF3EE";
+const INK = "#152238"; // brand navy, used for all headline/body text
+const INK_SOFT = "rgba(21,34,56,0.62)";
+const INK_FAINT = "rgba(21,34,56,0.38)";
+
+// BackButton
 function BackButton() {
   const navigate = useNavigate();
   return (
@@ -33,6 +41,7 @@ function BackButton() {
         border: "1px solid rgba(255,255,255,0.14)",
       }}
     >
+      {" "}
       <svg
         width="20"
         height="20"
@@ -40,23 +49,22 @@ function BackButton() {
         fill="none"
         aria-hidden="true"
       >
+        {" "}
         <path
           d="M15 5l-7 7 7 7"
           stroke="currentColor"
           strokeWidth="2.3"
           strokeLinecap="round"
           strokeLinejoin="round"
-        />
-      </svg>
-      Back
+        />{" "}
+      </svg>{" "}
+      Back{" "}
     </motion.button>
   );
 }
 
 /* ------------------------------------------------------------------ */
-/*  TiltLayer — wraps the hero photo/glyph, tilts it in 3D toward     */
-/*  the cursor. Spring-smoothed, subtle range, mouse-only, disabled   */
-/*  entirely under prefers-reduced-motion.                            */
+/*  TiltLayer — unchanged behaviour, still wraps the hero photo.       */
 /* ------------------------------------------------------------------ */
 
 function TiltLayer({
@@ -73,7 +81,7 @@ function TiltLayer({
   const rotateY = useSpring(rawRotateY, springConfig);
   const scale = useSpring(1, springConfig);
 
-  const MAX_DEG = 6; // subtle — keep this small, it's a texture not a gimmick
+  const MAX_DEG = 6;
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (reduceMotion || e.pointerType !== "mouse") return;
@@ -114,19 +122,88 @@ function TiltLayer({
 }
 
 /* ------------------------------------------------------------------ */
-/*  FruitHero — pins via sticky + scroll-linked transform. Now also    */
-/*  carries the 1-2 line intro, since the story chapters are gone.     */
+/*  JuiceBurst — a handful of small dots that fly outward and fade,    */
+/*  fired on tap/click of the hero photo.                              */
+/*                                                                      */
+/*  Randomness lives OUTSIDE render: `burst` is fully-computed particle */
+/*  data built inside the click handler (an event, not a render pass), */
+/*  then passed in as a plain prop. JuiceBurst itself only ever reads   */
+/*  that data — it never calls Math.random() itself, so the component  */
+/*  stays pure/idempotent no matter how many times React re-renders it. */
+/* ------------------------------------------------------------------ */
+
+type JuiceParticle = { angle: number; dist: number; size: number };
+type JuiceBurstData = { id: number; particles: JuiceParticle[] };
+
+const JUICE_PARTICLE_COUNT = 7;
+
+// Called from the click handler (an event callback), never from render.
+function createJuiceBurst(): JuiceBurstData {
+  const particles: JuiceParticle[] = Array.from(
+    { length: JUICE_PARTICLE_COUNT },
+    (_, i) => ({
+      angle: (i / JUICE_PARTICLE_COUNT) * Math.PI * 2,
+      dist: 55 + Math.random() * 35,
+      size: 5 + Math.random() * 6,
+    }),
+  );
+  return { id: Date.now(), particles };
+}
+
+function JuiceBurst({
+  accent,
+  burst,
+}: {
+  accent: string;
+  burst: JuiceBurstData | null;
+}) {
+  if (!burst) return null;
+  return (
+    <AnimatePresence>
+      <motion.div
+        key={burst.id}
+        className="pointer-events-none absolute inset-0 z-20"
+        aria-hidden="true"
+      >
+        {burst.particles.map((p, i) => (
+          <motion.span
+            key={i}
+            className="absolute left-1/2 top-1/2 rounded-full"
+            style={{ width: p.size, height: p.size, background: accent }}
+            initial={{ x: "-50%", y: "-50%", opacity: 0.95, scale: 1 }}
+            animate={{
+              x: `calc(-50% + ${Math.cos(p.angle) * p.dist}px)`,
+              y: `calc(-50% + ${Math.sin(p.angle) * p.dist + 18}px)`, // slight gravity drift
+              opacity: 0,
+              scale: 0.4,
+            }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          />
+        ))}
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  FruitHero — light theme: breadcrumb, chapter label, bold sans      */
+/*  headline, oversized accent tagline, glow-ringed photo, pill CTA.   */
+/*  The photo itself now idles, follows the cursor with a warm glow,   */
+/*  and reacts to a tap with a squeeze + juice burst.                  */
 /* ------------------------------------------------------------------ */
 
 function FruitHero({
   fruit,
   reduceMotion,
+  varietiesRef,
 }: {
   fruit: FruitData;
   reduceMotion: boolean;
+  varietiesRef: React.RefObject<HTMLElement | null>;
 }) {
   const ref = useRef<HTMLElement>(null);
   const [, setImgError] = useState(false);
+  const [burst, setBurst] = useState<JuiceBurstData | null>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
@@ -135,110 +212,306 @@ function FruitHero({
   const scale = useTransform(
     scrollYProgress,
     [0, 1],
-    reduceMotion ? [1, 1] : [1, 0.6],
+    reduceMotion ? [1, 1] : [1, 0.72],
   );
   const imgY = useTransform(
     scrollYProgress,
     [0, 1],
-    reduceMotion ? [0, 0] : [0, -60],
+    reduceMotion ? [0, 0] : [0, -50],
   );
-  const titleOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-  const titleY = useTransform(
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const contentY = useTransform(
     scrollYProgress,
     [0, 1],
-    reduceMotion ? [0, 0] : [0, -60],
+    reduceMotion ? [0, 0] : [0, -40],
   );
-  const scrimOpacity = useTransform(scrollYProgress, [0, 1], [0.15, 0.55]);
+
+  // cursor-tracked warm glow behind the photo
+  const glowRawX = useMotionValue(0);
+  const glowRawY = useMotionValue(0);
+  const glowX = useSpring(glowRawX, { stiffness: 100, damping: 20 });
+  const glowY = useSpring(glowRawY, { stiffness: 100, damping: 20 });
+
+  const handleStageMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (reduceMotion || e.pointerType !== "mouse") return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    glowRawX.set((e.clientX - rect.left - rect.width / 2) * 0.15);
+    glowRawY.set((e.clientY - rect.top - rect.height / 2) * 0.15);
+  };
+
+  const scrollToVarieties = () => {
+    varietiesRef.current?.scrollIntoView({
+      behavior: reduceMotion ? "auto" : "smooth",
+      block: "start",
+    });
+  };
 
   return (
-    // Extra scroll room is what creates the "pin" — the inner div is
-    // sticky, so it stays fixed to the viewport while this section's
-    // extra height scrolls underneath it.
-    <section ref={ref} style={{ height: "180vh" }} className="relative">
+    <section ref={ref} style={{ height: "170vh" }} className="relative">
       <div
-        className="sticky top-0 h-screen w-full overflow-hidden flex items-center"
+        className="sticky top-0 h-screen w-full overflow-hidden"
         style={{
-          background: `radial-gradient(120% 100% at 80% 20%, ${fruit.deep}, ${BRAND_DARK} 70%)`,
+          background: `radial-gradient(120% 90% at 82% 12%, color-mix(in srgb, ${fruit.accent} 10%, ${PAGE_BG}), ${PAGE_BG} 62%)`,
+          backgroundColor: PAGE_BG,
         }}
       >
-        <motion.div
-          className="absolute right-[6%] top-1/2 -translate-y-1/2 hidden sm:block"
-          style={{ scale, y: imgY, width: "36%", aspectRatio: "1 / 1" }}
-        >
-          <TiltLayer reduceMotion={reduceMotion}>
-            <img
-              src={fruit.heroImage}
-              alt=""
-              role="presentation"
-              fetchPriority="high"
-              loading="eager"
-              decoding="async"
-              className="h-full w-full object-cover"
-              onError={() => setImgError(true)}
-            />
-          </TiltLayer>
-        </motion.div>
-
+        {/* faint graph-paper texture, echoes the reference screenshot */}
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="pointer-events-none absolute inset-0 opacity-[0.35]"
           style={{
-            background:
-              "linear-gradient(90deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0.05) 75%)",
+            backgroundImage: `linear-gradient(${INK_FAINT} 1px, transparent 1px), linear-gradient(90deg, ${INK_FAINT} 1px, transparent 1px)`,
+            backgroundSize: "56px 56px",
+            maskImage:
+              "radial-gradient(80% 60% at 50% 30%, black 0%, transparent 75%)",
+            opacity: 0.05,
           }}
-        />
-        <motion.div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: "#000", opacity: scrimOpacity }}
+          aria-hidden="true"
         />
 
-        <motion.div
-          style={{ opacity: titleOpacity, y: titleY }}
-          className="relative z-10 max-w-4xl px-6 sm:px-10 lg:px-16"
-        >
-          {/* <p
-            className="mb-4 font-mono text-xs tracking-[0.25em] uppercase"
-            style={{ color: fruit.accent }}
-          >
-            {fruit.eyebrow}
-          </p> */}
-          <h1
-            className="leading-[0.85] font-bold text-white"
-            style={{
-              fontFamily: "'Fraunces', serif",
-              fontSize: "clamp(3.2rem, 12vw, 8.5rem)",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            {fruit.name}
-          </h1>
-          {/* <p
-            className="mt-6 max-w-md text-lg sm:text-xl italic text-white/70"
-            style={{ fontFamily: "'Fraunces', serif" }}
-          >
-            {fruit.tagline}
-          </p> */}
-          <p className="mt-8 max-w-xl text-sm sm:text-base leading-relaxed text-white/55">
-            {fruit.intro}
-          </p>
-          <div className="mt-10 flex items-center gap-4">
-            <button
-              className="px-6 py-3 rounded-full font-semibold text-sm text-black transition-transform hover:scale-105 focus-visible:outline-2"
-              style={{ background: fruit.accent }}
+        <BackButton />
+
+        <div className="relative z-10 flex h-full w-full items-center px-6 pb-16 pt-6 sm:px-10 lg:px-16">
+          <div className="grid w-full items-center gap-10 lg:grid-cols-2">
+            {/* ---------------- left: copy ---------------- */}
+            <motion.div
+              style={{ opacity: contentOpacity, y: contentY }}
+              className="max-w-xl"
             >
-              Enquire about {fruit.name}
-            </button>
-            {/* <span className="text-white/50 text-sm hidden sm:inline">
-              Scroll to explore ↓
-            </span> */}
+              <div className="mb-4 flex items-center gap-3">
+                <span
+                  aria-hidden="true"
+                  className="h-px w-8"
+                  style={{ background: fruit.accent }}
+                />
+                <p
+                  className="font-mono text-xs font-semibold tracking-[0.25em] uppercase"
+                  style={{ color: fruit.accent }}
+                >
+                  {fruit.eyebrow ?? "The Collection"}
+                </p>
+              </div>
+
+              <h1
+                className="font-extrabold leading-[0.9]"
+                style={{
+                  color: INK,
+                  fontFamily:
+                    "'Inter', ui-sans-serif, system-ui, sans-serif",
+                  fontSize: "clamp(3.2rem, 9vw, 6.5rem)",
+                  letterSpacing: "-0.03em",
+                }}
+              >
+                {fruit.name}
+              </h1>
+
+              <p
+                className="mt-6 max-w-md text-base leading-relaxed sm:text-lg"
+                style={{ color: INK_SOFT }}
+              >
+                {fruit.intro}
+              </p>
+
+              <div className="mt-10 flex flex-wrap items-center gap-5">
+                <button
+                  className="flex items-center gap-3 rounded-full py-2 pl-6 pr-2 text-sm font-semibold transition-transform hover:scale-[1.03] active:scale-95 focus-visible:outline-2"
+                  style={{ background: fruit.accent, color: INK }}
+                >
+                  Enquire about {fruit.name}
+                  <span
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-white"
+                    aria-hidden="true"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M7 17L17 7M17 7H8M17 7V16"
+                        stroke={INK}
+                        strokeWidth="2.2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                </button>
+
+                <button
+                  onClick={scrollToVarieties}
+                  className="flex items-center gap-1.5 text-sm font-medium transition-opacity hover:opacity-70 focus-visible:outline-2"
+                  style={{ color: INK_SOFT }}
+                >
+                  See the varieties
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M12 5v14M12 19l-6-6M12 19l6-6"
+                      stroke="currentColor"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </motion.div>
+
+            {/* ---------------- right: photo + tagline ---------------- */}
+            <div
+              className="relative hidden h-[70vh] items-center justify-center sm:flex"
+              onPointerMove={handleStageMove}
+            >
+              {/* cursor-tracked warm glow, sits behind everything */}
+              {!reduceMotion && (
+                <motion.div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute rounded-full blur-3xl"
+                  style={{
+                    width: "60%",
+                    aspectRatio: "1 / 1",
+                    background: `radial-gradient(circle, color-mix(in srgb, ${fruit.accent} 40%, transparent), transparent 70%)`,
+                    x: glowX,
+                    y: glowY,
+                  }}
+                />
+              )}
+
+              {/* breathing ring — subtle pulse instead of static */}
+              <motion.div
+                aria-hidden="true"
+                className="absolute rounded-full"
+                style={{
+                  width: "78%",
+                  aspectRatio: "1 / 1",
+                  border: `1px solid color-mix(in srgb, ${fruit.accent} 35%, transparent)`,
+                }}
+                animate={
+                  reduceMotion
+                    ? undefined
+                    : { scale: [1, 1.03, 1], opacity: [0.6, 1, 0.6] }
+                }
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              />
+
+              {fruit.tagline && (
+                <p
+                  className="absolute left-0 top-[8%] max-w-xs text-2xl font-bold leading-snug sm:text-3xl"
+                  style={{
+                    color: fruit.accent,
+                    fontFamily: "'Fraunces', serif",
+                  }}
+                >
+                  {fruit.tagline}
+                </p>
+              )}
+
+              {/* outer: one-shot "bloom" entrance — from nothing to full,   */}
+              {/* fires on mount (this whole component remounts per fruit    */}
+              {/* via the AnimatePresence key={fruit.slug} up in FruitPage)  */}
+              <motion.div
+                className="relative"
+                style={{ width: "58%", aspectRatio: "1 / 1" }}
+                initial={reduceMotion ? false : { opacity: 0, scale: 0.25 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                  duration: 0.9,
+                  delay: 0.15,
+                  ease: [0.34, 1.56, 0.64, 1], // slight overshoot — a soft "pop" as it blooms
+                }}
+              >
+                {/* inner: unchanged — scroll-linked scale/y, idle float loop, */}
+                {/* tap-to-squeeze, juice burst. Idle loop is delayed until    */}
+                {/* the bloom above has finished so it doesn't fight it.       */}
+                <motion.div
+                  className="relative h-full w-full"
+                  style={{ scale, y: imgY }}
+                  animate={
+                    reduceMotion
+                      ? undefined
+                      : { y: [0, -10, 0], rotate: [0, 1.2, 0, -1.2, 0] }
+                  }
+                  transition={{
+                    duration: 6,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: reduceMotion ? 0 : 1.1,
+                  }}
+                  whileTap={reduceMotion ? undefined : { scale: 0.94 }}
+                  onClick={() => setBurst(createJuiceBurst())}
+                >
+                  <TiltLayer reduceMotion={reduceMotion}>
+                    <div
+                      className="h-full w-full cursor-pointer overflow-hidden rounded-full shadow-2xl"
+                      style={{
+                        boxShadow: `0 30px 60px -20px color-mix(in srgb, ${fruit.deep ?? fruit.accent} 45%, transparent)`,
+                      }}
+                    >
+                      <img
+                        src={fruit.heroImage}
+                        alt={fruit.name}
+                        fetchPriority="high"
+                        loading="eager"
+                        decoding="async"
+                        className="h-full w-full object-cover"
+                        onError={() => setImgError(true)}
+                      />
+                    </div>
+                  </TiltLayer>
+                  <JuiceBurst accent={fruit.accent} burst={burst} />
+                </motion.div>
+              </motion.div>
+            </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
 }
 
 /* ------------------------------------------------------------------ */
-/*  VarietiesGrid — stagger reveal, now with a photo per variety       */
+/*  SectionRail — light equivalent of the numbered chapter rail in     */
+/*  the reference. This page only has two sections (Overview /         */
+/*  Varieties), so it's a compact 2-stop version rather than the       */
+/*  9-item rail, which belonged to a multi-chapter layout this data    */
+/*  model doesn't have.                                                */
+/* ------------------------------------------------------------------ */
+
+function SectionRail({
+  accent,
+  activeIndex,
+  onJump,
+}: {
+  accent: string;
+  activeIndex: 0 | 1;
+  onJump: (index: 0 | 1) => void;
+}) {
+  const items = [
+    { label: "Overview", n: "01" },
+    { label: "Varieties", n: "02" },
+  ];
+  return (
+    <div
+      className="fixed right-6 top-1/2 z-30 hidden -translate-y-1/2 flex-col items-center gap-4 lg:flex"
+      aria-label="Section navigation"
+    >
+      {items.map((item, i) => (
+        <button
+          key={item.n}
+          onClick={() => onJump(i as 0 | 1)}
+          className="group flex h-8 w-8 items-center justify-center rounded-full font-mono text-[11px] font-semibold transition-all focus-visible:outline-2"
+          style={{
+            background: activeIndex === i ? accent : "transparent",
+            color: activeIndex === i ? INK : INK_FAINT,
+            border: activeIndex === i ? "none" : `1px solid ${INK_FAINT}`,
+          }}
+          aria-current={activeIndex === i ? "true" : undefined}
+          title={item.label}
+        >
+          {item.n}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  VarietiesGrid — light cards on the cream background.               */
 /* ------------------------------------------------------------------ */
 
 const gridContainer: Variants = {
@@ -270,10 +543,9 @@ function VarietyCard({
       variants={reduceMotion ? undefined : gridItem}
       whileHover={reduceMotion ? undefined : { y: -6 }}
       transition={{ duration: 0.25 }}
-      className="overflow-hidden rounded-2xl border border-white/10"
-      style={{ background: "rgba(255,255,255,0.03)" }}
+      className="overflow-hidden rounded-2xl bg-white shadow-[0_8px_30px_-12px_rgba(21,34,56,0.15)]"
     >
-      <div className="aspect-4/3 w-full overflow-hidden bg-white/5">
+      <div className="aspect-4/3 w-full overflow-hidden bg-black/5">
         {!imgError ? (
           <img
             src={variety.image}
@@ -293,22 +565,28 @@ function VarietyCard({
         )}
       </div>
       <div className="p-6">
-        <div className="flex items-center justify-between mb-4">
-          {/* <span
-            className="w-2.5 h-2.5 rounded-full"
+        <div className="mb-3 flex items-center gap-2">
+          <span
+            className="h-2 w-2 rounded-full"
             style={{ background: accent }}
-          /> */}
-          {/* <span className="font-mono text-[10px] tracking-widest text-white/40">
+            aria-hidden="true"
+          />
+          <span
+            className="font-mono text-[10px] tracking-widest"
+            style={{ color: INK_FAINT }}
+          >
             {variety.code}
-          </span> */}
+          </span>
         </div>
         <h3
-          className="text-white font-semibold text-lg mb-2"
-          style={{ fontFamily: "'Fraunces', serif" }}
+          className="mb-2 text-lg font-semibold"
+          style={{ color: INK, fontFamily: "'Fraunces', serif" }}
         >
           {variety.name}
         </h3>
-        <p className="text-white/55 text-sm leading-relaxed">{variety.blurb}</p>
+        <p className="text-sm leading-relaxed" style={{ color: INK_SOFT }}>
+          {variety.blurb}
+        </p>
       </div>
     </motion.article>
   );
@@ -317,21 +595,24 @@ function VarietyCard({
 function VarietiesGrid({
   fruit,
   reduceMotion,
+  sectionRef,
 }: {
   fruit: FruitData;
   reduceMotion: boolean;
+  sectionRef: React.RefObject<HTMLElement | null>;
 }) {
   return (
     <section
-      className="px-6 sm:px-10 lg:px-20 py-24"
-      style={{ background: BRAND_DARK }}
+      ref={sectionRef}
+      className="px-6 py-24 sm:px-10 lg:px-16"
+      style={{ background: PAGE_BG }}
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="mx-auto max-w-6xl">
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="font-mono text-xs tracking-[0.25em] uppercase mb-3"
+          className="mb-3 font-mono text-xs uppercase tracking-[0.25em]"
           style={{ color: fruit.accent }}
         >
           The Varieties
@@ -341,8 +622,8 @@ function VarietiesGrid({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-3xl sm:text-4xl font-bold text-white mb-12"
-          style={{ fontFamily: "'Fraunces', serif" }}
+          className="mb-12 text-3xl font-bold sm:text-4xl"
+          style={{ color: INK, fontFamily: "'Fraunces', serif" }}
         >
           Every {fruit.name.slice(0, -1)}, catalogued.
         </motion.h2>
@@ -352,7 +633,7 @@ function VarietiesGrid({
           initial={reduceMotion ? undefined : "hidden"}
           whileInView={reduceMotion ? undefined : "show"}
           viewport={{ once: true, amount: 0.15 }}
-          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5"
+          className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
         >
           {fruit.varieties.map((v) => (
             <VarietyCard
@@ -368,55 +649,54 @@ function VarietiesGrid({
   );
 }
 
-/** Slim top-of-viewport reading-progress bar. Previously this only
- *  covered `lg:` screens as a fallback for the chapter rail; now that
- *  the story chapters (and their rail) are gone, it's the one progress
- *  indicator for the whole page, on every breakpoint. */
-// function ReadingProgressBar({ accent }: { accent: string }) {
-//   const scrollRef = useProgressScrollRef();
-//   const { scrollYProgress } = useScroll({ container: scrollRef });
-//   const width = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-//   return (
-//     <div
-//       className="fixed top-0 left-0 right-0 z-30 h-1 bg-white/10"
-//       aria-hidden="true"
-//     >
-//       <motion.div className="h-full" style={{ width, background: accent }} />
-//     </div>
-//   );
-// }
-
-// Small helper so ReadingProgressBar can share the same scroll container
-// ref as the page without prop-drilling a MotionValue down.
 const ScrollRefContext =
   createContext<React.RefObject<HTMLDivElement | null> | null>(null);
 
-//   function useProgressScrollRef() {
-//   const ref = useContext(ScrollRefContext);
-//   if (!ref) throw new Error("ReadingProgressBar must be used within FruitPage");
-//   return ref;
-// }
-
 /* ------------------------------------------------------------------ */
-/*  FruitPage — the actual /:fruitName route                          */
+/*  FruitPage — the /:fruitName route                                  */
 /* ------------------------------------------------------------------ */
 
-/**
- * Route: /:fruitName  →  e.g. /apple, /mandarin, /kiwi
- *   { path: "/:fruitName", element: <FruitPage /> }
- * Lazy-loaded at the router level (see App.tsx) so this animation
- * code only ships to visitors who land on a fruit page.
- */
 export default function FruitPage() {
   const { fruitName } = useParams<{ fruitName: string }>();
   const fruit = getFruitBySlug(fruitName);
 
   const reduceMotion = useReducedMotion() ?? false;
   const scrollRef = useRef<HTMLDivElement>(null);
+  const varietiesRef = useRef<HTMLElement>(null);
+  const [activeSection, setActiveSection] = useState<0 | 1>(0);
+
+  useEffect(() => {
+    const container = scrollRef.current;
+    const target = varietiesRef.current;
+    if (!container || !target) return;
+
+    const onScroll = () => {
+      const containerTop = container.getBoundingClientRect().top;
+      const targetTop = target.getBoundingClientRect().top;
+      setActiveSection(targetTop - containerTop < window.innerHeight / 2 ? 1 : 0);
+    };
+
+    container.addEventListener("scroll", onScroll, { passive: true });
+    return () => container.removeEventListener("scroll", onScroll);
+  }, [fruit?.slug]);
 
   if (!fruit) {
     return <Navigate to="/" replace />;
   }
+
+  const jumpTo = (index: 0 | 1) => {
+    if (index === 0) {
+      scrollRef.current?.scrollTo({
+        top: 0,
+        behavior: reduceMotion ? "auto" : "smooth",
+      });
+    } else {
+      varietiesRef.current?.scrollIntoView({
+        behavior: reduceMotion ? "auto" : "smooth",
+        block: "start",
+      });
+    }
+  };
 
   return (
     <AnimatePresence mode="wait">
@@ -427,16 +707,27 @@ export default function FruitPage() {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.3 }}
         ref={scrollRef}
-        className="h-dvh w-full overflow-y-auto overflow-x-hidden bg-black"
-        style={{ scrollBehavior: reduceMotion ? "auto" : "smooth" }}
+        className="h-dvh w-full overflow-y-auto overflow-x-hidden"
+        style={{ scrollBehavior: reduceMotion ? "auto" : "smooth", background: PAGE_BG }}
       >
         <ScrollRefContext.Provider value={scrollRef}>
-          <BackButton />
-          {/* <ReadingProgressBar accent={fruit.accent} /> */}
+          <SectionRail
+            accent={fruit.accent}
+            activeIndex={activeSection}
+            onJump={jumpTo}
+          />
 
-          <FruitHero fruit={fruit} reduceMotion={reduceMotion} />
+          <FruitHero
+            fruit={fruit}
+            reduceMotion={reduceMotion}
+            varietiesRef={varietiesRef}
+          />
 
-          <VarietiesGrid fruit={fruit} reduceMotion={reduceMotion} />
+          <VarietiesGrid
+            fruit={fruit}
+            reduceMotion={reduceMotion}
+            sectionRef={varietiesRef}
+          />
         </ScrollRefContext.Provider>
       </motion.div>
     </AnimatePresence>

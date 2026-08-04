@@ -171,9 +171,10 @@ const OurProducts = () => {
             >
               <div
                 key={card.key}
-                className="group relative flex min-h-105 flex-col justify-between overflow-hidden rounded-2xl bg-cover bg-center p-8"
+                className="group relative flex min-h-105 flex-col justify-between overflow-hidden rounded-2xl bg-cover bg-center p-8 transition-transform duration-500 ease-out group-hover:scale-110"
                 style={{ backgroundImage: `url(${card.image})` }}
               >
+                
                 <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-black/10" />
 
                 <div className="relative">
@@ -224,7 +225,7 @@ const OurProducts = () => {
             >
               <div
                 key={card.key}
-                className="group relative flex min-h-50 flex-col justify-end overflow-hidden rounded-2xl bg-cover bg-center p-6"
+                className="group relative flex min-h-50 flex-col justify-end overflow-hidden rounded-2xl bg-cover bg-center p-6 transition-transform duration-500 ease-out group-hover:scale-110"
                 style={{ backgroundImage: `url(${card.image})` }}
               >
                 <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/35 to-transparent" />

@@ -7,8 +7,10 @@ import BrandSection from "../sections/BrandSection";
 import OurProducts from "../sections/OurProducts";
 import ContactSection from "../sections/ContactSection";
 import CustomerReviews from "../components/ui/Testimonials";
+import { useScrollToHash } from "../hooks/useScrollToHash";
 
 const LandingPage = () => {
+  useScrollToHash();
   const { pathname } = useLocation();
 
   useEffect(() => {
