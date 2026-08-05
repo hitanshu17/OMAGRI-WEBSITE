@@ -18,7 +18,7 @@ export const leaders = [
   {
     initials: "JG",
     name: "Jitesh Gaba",
-    title: "Head of Purchase & Imports",
+    title: "Head of Global Sourcing & Imports",
     bio: "Combines expertise in international procurement, imports, and strategic marketing with a results-driven approach. Committed to quality, strong global partnerships, and sustainable growth.",
     phone: "+91 9999041004",
     email: "jiteshgaba@ommagrivilla.in",

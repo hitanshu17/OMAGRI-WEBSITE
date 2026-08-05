@@ -21,7 +21,7 @@ interface Stage {
 }
 
 const STAGES: Stage[] = [
-  { eyebrow: "The reveal", title: "Selected at the source.", image: kiwiWhole },
+  { eyebrow: "The reveal", title: "Where Nature Meets Perfection", image: kiwiWhole },
   {
     eyebrow: "Peel & protect",
     title: "Protected in every layer.",
