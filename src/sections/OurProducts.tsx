@@ -22,7 +22,7 @@ const featuredCards = [
     slug: "kiwi",
     theme: "dark",
     eyebrow: "Hayat Kiwi",
-    title: "Hayat Kiwi",
+    title: "Kiwi",
     desc: "Grown under the Hayat label and ripened on a fixed schedule rather than in transit, for a tender core and consistent sweetness in every crate.",
     image: kiwi,
     tags: ["Hayward Kiwi", "Golden Kiwi"],
@@ -33,7 +33,7 @@ const featuredCards = [
     slug: "orange",
     theme: "dark",
     eyebrow: "Bestseller",
-    title: "Global Citrus",
+    title: "Citrus",
     desc: "Sun-drenched oranges from South Africa and Egypt, known for high juice content and vibrant essential oils.",
     image: orange,
     tags: ["Valencia", "Navel", "Midnight Valencia"],
@@ -46,7 +46,7 @@ const produceCards = [
     key: "apples",
     slug: "apple",
     theme: "light",
-    title: "Crisp Apples",
+    title: "Apples",
     desc: "Firm, cold-stored apples available year round across sweet and tart varieties.",
     image: apple,
     tag: "Gala · Fuji · Pink Lady",
@@ -55,7 +55,7 @@ const produceCards = [
     key: "mandarins",
     slug: "mandarin",
     theme: "light",
-    title: "Sweet Mandarins",
+    title: "Mandarins",
     desc: "Loose-skinned, easy-peel mandarins bred for a long, overlapping season.",
     image: mandarin,
     tag: "Nadorcott · Murcott · Tango",
@@ -64,7 +64,7 @@ const produceCards = [
     key: "grapes",
     slug: "grape",
     theme: "light",
-    title: "Table Grapes",
+    title: "Grapes",
     desc: "Crisp, seedless varieties from premium vines.",
     image: grape,
     tag: "Red Globe · Shine Muscat",
@@ -73,7 +73,7 @@ const produceCards = [
     key: "pears",
     slug: "pear",
     theme: "light",
-    title: "Heritage Pears",
+    title: "Pears",
     desc: "Firm-fleshed varieties with excellent shelf life and travel durability.",
     image: pears,
     tag: "Packham's Triumph · Red Anjou",
@@ -82,7 +82,7 @@ const produceCards = [
     key: "plums",
     slug: "plum",
     theme: "light",
-    title: "Stone Fruit Plums",
+    title: "Plums",
     desc: "Firm-picked and finished off the tree, with skin colour ranging from deep black to bright red.",
     image: plum,
     tag: "Black Amber · Santa Rosa",
@@ -91,7 +91,7 @@ const produceCards = [
     key: "cherries",
     slug: "cherry",
     theme: "dark",
-    title: "Sweet Cherries",
+    title: "Cherries",
     desc: "Stem-cut and cold-chained fast, spanning a full spread of early to late-season varieties.",
     image: cherry,
     tag: "Bing · Regina · Lapins",
@@ -174,7 +174,6 @@ const OurProducts = () => {
                 className="group relative flex min-h-105 flex-col justify-between overflow-hidden rounded-2xl bg-cover bg-center p-8 transition-transform duration-500 ease-out group-hover:scale-110"
                 style={{ backgroundImage: `url(${card.image})` }}
               >
-                
                 <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-black/10" />
 
                 <div className="relative">
@@ -200,13 +199,6 @@ const OurProducts = () => {
                       </span>
                     ))}
                   </div>
-                  {/* <a
-                  href="#"
-                  className="mt-5 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[#d97b3c] transition-transform duration-200 group-hover:translate-x-1"
-                >
-                  {card.cta}
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </a> */}
                 </div>
               </div>
             </Link>
@@ -216,12 +208,12 @@ const OurProducts = () => {
 
       {/* Produce grid */}
       <section className="px-6 pb-20 md:px-16">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mx-auto flex max-w-6xl flex-wrap justify-center gap-6">
           {produceCards.map((card) => (
             <Link
               to={`/${card.slug}`}
               key={card.key}
-              className="group relative flex min-h-50 flex-col justify-end overflow-hidden rounded-2xl bg-cover bg-center"
+              className="group relative flex min-h-50 w-full flex-col justify-end overflow-hidden rounded-2xl bg-cover bg-center sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)]"
             >
               <div
                 key={card.key}
@@ -232,12 +224,6 @@ const OurProducts = () => {
 
                 <div className="relative">
                   <h3 className="font-semibold text-white">{card.title}</h3>
-                  {/* <p className="mt-2 text-sm leading-relaxed text-white/70">
-                    {card.desc}
-                  </p> */}
-                  {/* <span className="mt-3 block text-[11px] font-semibold uppercase tracking-widest text-[#d97b3c]">
-                    {card.tag}
-                  </span> */}
                 </div>
               </div>
             </Link>
@@ -247,15 +233,24 @@ const OurProducts = () => {
 
       {/* Seasonal Calendar popup */}
       <section className="px-6 pb-20 md:px-16">
-        <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 rounded-2xl border border-slate-100 bg-slate-50/60 px-6 py-10 text-center">
-          <h3 className="text-xl font-bold text-slate-900">
+        <div className="mx-auto max-w-6xl overflow-hidden rounded-2xl bg-linear-to-br from-[#193768] via-[#1d4079] to-[#0f2547] px-6 py-14 text-center shadow-xl shadow-[#193768]/20 sm:px-12">
+          <div className="mb-4 flex items-center justify-center gap-3">
+            <span className="h-0.5 w-8 bg-[#d97b3c]" />
+            <span className="text-xs font-semibold uppercase tracking-widest text-[#d97b3c]">
+              Seasonal Guide
+            </span>
+            <span className="h-0.5 w-8 bg-[#d97b3c]" />
+          </div>
+
+          <h3 className="text-2xl font-extrabold text-white sm:text-3xl">
             Not sure what's in season?
           </h3>
-          <p className="max-w-md text-sm text-slate-500">
+          <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-white/70">
             Check month-by-month availability across our full fruit range before
             you place an order.
           </p>
-          <div className="mt-2">
+
+          <div className="mt-6 flex justify-center">
             <FruitCalendarPopup />
           </div>
         </div>

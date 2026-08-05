@@ -12,12 +12,6 @@ import {
 } from "framer-motion";
 import { getFruitBySlug, type FruitData, type Variety } from "../data/fruits";
 
-/* ------------------------------------------------------------------ */
-/*  Palette — warm, light theme (matches the "Apples" reference).      */
-/*  Everything else stays keyed off fruit.accent so each fruit still   */
-/*  gets its own character without a full re-theme per page.           */
-/* ------------------------------------------------------------------ */
-
 const PAGE_BG = "#FBF3EE";
 const INK = "#152238"; // brand navy, used for all headline/body text
 const INK_SOFT = "rgba(21,34,56,0.62)";
@@ -33,21 +27,22 @@ function BackButton() {
       transition={{ duration: 0.4, delay: 0.15 }}
       onClick={() => navigate(-1)}
       aria-label="Back"
-      className="fixed z-40 flex items-center gap-1 rounded-full py-2 pl-2.5 pr-4 text-[15px] font-medium text-white backdrop-blur-md transition-transform active:scale-95 focus-visible:outline-2 focus-visible:outline-white/70"
+      className="fixed z-40 flex items-center gap-1 rounded-full py-2 pl-2.5 pr-4 text-sm font-medium text-white backdrop-blur-md transition-transform active:scale-95 focus-visible:outline-2 focus-visible:outline-white/70 sm:text-[15px]"
       style={{
-        top: "max(1.25rem, env(safe-area-inset-top))",
-        left: "max(1.25rem, env(safe-area-inset-left))",
+        top: "max(1rem, env(safe-area-inset-top))",
+        left: "max(1rem, env(safe-area-inset-left))",
         background: "rgba(20,20,20,0.45)",
         border: "1px solid rgba(255,255,255,0.14)",
       }}
     >
       {" "}
       <svg
-        width="20"
-        height="20"
+        width="18"
+        height="18"
         viewBox="0 0 24 24"
         fill="none"
         aria-hidden="true"
+        className="sm:h-5 sm:w-5"
       >
         {" "}
         <path
@@ -121,17 +116,6 @@ function TiltLayer({
   );
 }
 
-/* ------------------------------------------------------------------ */
-/*  JuiceBurst — a handful of small dots that fly outward and fade,    */
-/*  fired on tap/click of the hero photo.                              */
-/*                                                                      */
-/*  Randomness lives OUTSIDE render: `burst` is fully-computed particle */
-/*  data built inside the click handler (an event, not a render pass), */
-/*  then passed in as a plain prop. JuiceBurst itself only ever reads   */
-/*  that data — it never calls Math.random() itself, so the component  */
-/*  stays pure/idempotent no matter how many times React re-renders it. */
-/* ------------------------------------------------------------------ */
-
 type JuiceParticle = { angle: number; dist: number; size: number };
 type JuiceBurstData = { id: number; particles: JuiceParticle[] };
 
@@ -184,13 +168,6 @@ function JuiceBurst({
     </AnimatePresence>
   );
 }
-
-/* ------------------------------------------------------------------ */
-/*  FruitHero — light theme: breadcrumb, chapter label, bold sans      */
-/*  headline, oversized accent tagline, glow-ringed photo, pill CTA.   */
-/*  The photo itself now idles, follows the cursor with a warm glow,   */
-/*  and reacts to a tap with a squeeze + juice burst.                  */
-/* ------------------------------------------------------------------ */
 
 function FruitHero({
   fruit,
@@ -247,9 +224,15 @@ function FruitHero({
   };
 
   return (
-    <section ref={ref} style={{ height: "170vh" }} className="relative">
+    <section ref={ref} className="relative h-[195vh] sm:h-[170vh]">
+      {/*
+        Mobile/tablet stack the photo below the copy inside this sticky
+        panel, so it needs to be allowed to grow past 100vh instead of
+        being clipped. From sm upward the original fixed h-screen +
+        overflow-hidden pinning is restored.
+      */}
       <div
-        className="sticky top-0 h-screen w-full overflow-hidden"
+        className="sticky top-0 min-h-screen w-full overflow-hidden sm:h-screen"
         style={{
           background: `radial-gradient(120% 90% at 82% 12%, color-mix(in srgb, ${fruit.accent} 10%, ${PAGE_BG}), ${PAGE_BG} 62%)`,
           backgroundColor: PAGE_BG,
@@ -270,34 +253,20 @@ function FruitHero({
 
         <BackButton />
 
-        <div className="relative z-10 flex h-full w-full items-center px-6 pb-16 pt-6 sm:px-10 lg:px-16">
-          <div className="grid w-full items-center gap-10 lg:grid-cols-2">
+        <div className="relative z-10 flex w-full flex-col items-center px-6 pb-12 pt-24 sm:h-full sm:flex-row sm:px-10 sm:pb-16 sm:pt-6 lg:px-16">
+          <div className="grid w-full items-center gap-8 sm:gap-10 lg:grid-cols-2">
             {/* ---------------- left: copy ---------------- */}
             <motion.div
               style={{ opacity: contentOpacity, y: contentY }}
-              className="max-w-xl"
+              className="order-2 max-w-xl text-center sm:order-1 sm:text-left"
             >
-              <div className="mb-4 flex items-center gap-3">
-                <span
-                  aria-hidden="true"
-                  className="h-px w-8"
-                  style={{ background: fruit.accent }}
-                />
-                <p
-                  className="font-mono text-xs font-semibold tracking-[0.25em] uppercase"
-                  style={{ color: fruit.accent }}
-                >
-                  {fruit.eyebrow ?? "The Collection"}
-                </p>
-              </div>
-
               <h1
-                className="font-extrabold leading-[0.9]"
+                className="font-extrabold leading-[0.95] sm:leading-[0.9]"
                 style={{
                   color: INK,
                   fontFamily:
                     "'Inter', ui-sans-serif, system-ui, sans-serif",
-                  fontSize: "clamp(3.2rem, 9vw, 6.5rem)",
+                  fontSize: "clamp(2.6rem, 12vw, 6.5rem)",
                   letterSpacing: "-0.03em",
                 }}
               >
@@ -305,16 +274,16 @@ function FruitHero({
               </h1>
 
               <p
-                className="mt-6 max-w-md text-base leading-relaxed sm:text-lg"
+                className="mx-auto mt-5 max-w-md text-base leading-relaxed sm:mx-0 sm:mt-6 sm:text-lg"
                 style={{ color: INK_SOFT }}
               >
                 {fruit.intro}
               </p>
 
-              <div className="mt-10 flex flex-wrap items-center gap-5">
+              <div className="mt-8 flex flex-col items-center gap-4 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-center sm:gap-5">
                 <button
                   className="flex items-center gap-3 rounded-full py-2 pl-6 pr-2 text-sm font-semibold transition-transform hover:scale-[1.03] active:scale-95 focus-visible:outline-2"
-                  style={{ background: fruit.accent, color: INK }}
+                  style={{ background: fruit.accent, color: "white" }}
                 >
                   Enquire about {fruit.name}
                   <span
@@ -354,7 +323,7 @@ function FruitHero({
 
             {/* ---------------- right: photo + tagline ---------------- */}
             <div
-              className="relative hidden h-[70vh] items-center justify-center sm:flex"
+              className="relative order-1 flex h-[40vh] items-center justify-center sm:order-2 sm:h-[55vh] lg:h-[70vh]"
               onPointerMove={handleStageMove}
             >
               {/* cursor-tracked warm glow, sits behind everything */}
@@ -391,7 +360,7 @@ function FruitHero({
 
               {fruit.tagline && (
                 <p
-                  className="absolute left-0 top-[8%] max-w-xs text-2xl font-bold leading-snug sm:text-3xl"
+                  className="absolute left-0 top-[4%] hidden max-w-[9rem] text-xl font-bold leading-snug sm:block sm:max-w-xs sm:text-2xl lg:text-3xl"
                   style={{
                     color: fruit.accent,
                     fontFamily: "'Fraunces', serif",
@@ -406,7 +375,7 @@ function FruitHero({
               {/* via the AnimatePresence key={fruit.slug} up in FruitPage)  */}
               <motion.div
                 className="relative"
-                style={{ width: "58%", aspectRatio: "1 / 1" }}
+                style={{ width: "72%", aspectRatio: "1 / 1", maxWidth: "22rem" }}
                 initial={reduceMotion ? false : { opacity: 0, scale: 0.25 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{
@@ -464,14 +433,6 @@ function FruitHero({
   );
 }
 
-/* ------------------------------------------------------------------ */
-/*  SectionRail — light equivalent of the numbered chapter rail in     */
-/*  the reference. This page only has two sections (Overview /         */
-/*  Varieties), so it's a compact 2-stop version rather than the       */
-/*  9-item rail, which belonged to a multi-chapter layout this data    */
-/*  model doesn't have.                                                */
-/* ------------------------------------------------------------------ */
-
 function SectionRail({
   accent,
   activeIndex,
@@ -497,7 +458,7 @@ function SectionRail({
           className="group flex h-8 w-8 items-center justify-center rounded-full font-mono text-[11px] font-semibold transition-all focus-visible:outline-2"
           style={{
             background: activeIndex === i ? accent : "transparent",
-            color: activeIndex === i ? INK : INK_FAINT,
+            color: activeIndex === i ? "white" : INK_FAINT,
             border: activeIndex === i ? "none" : `1px solid ${INK_FAINT}`,
           }}
           aria-current={activeIndex === i ? "true" : undefined}
@@ -564,7 +525,7 @@ function VarietyCard({
           </div>
         )}
       </div>
-      <div className="p-6">
+      <div className="p-5 sm:p-6">
         <div className="mb-3 flex items-center gap-2">
           <span
             className="h-2 w-2 rounded-full"
@@ -604,7 +565,7 @@ function VarietiesGrid({
   return (
     <section
       ref={sectionRef}
-      className="px-6 py-24 sm:px-10 lg:px-16"
+      className="px-6 py-16 sm:px-10 sm:py-24 lg:px-16"
       style={{ background: PAGE_BG }}
     >
       <div className="mx-auto max-w-6xl">
@@ -622,7 +583,7 @@ function VarietiesGrid({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-12 text-3xl font-bold sm:text-4xl"
+          className="mb-10 text-2xl font-bold sm:mb-12 sm:text-3xl lg:text-4xl"
           style={{ color: INK, fontFamily: "'Fraunces', serif" }}
         >
           Every {fruit.name.slice(0, -1)}, catalogued.
@@ -633,7 +594,7 @@ function VarietiesGrid({
           initial={reduceMotion ? undefined : "hidden"}
           whileInView={reduceMotion ? undefined : "show"}
           viewport={{ once: true, amount: 0.15 }}
-          className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
+          className="grid grid-cols-1 gap-4 min-[480px]:grid-cols-2 sm:gap-5 lg:grid-cols-4"
         >
           {fruit.varieties.map((v) => (
             <VarietyCard

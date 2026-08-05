@@ -1,6 +1,7 @@
 import React from "react";
 import { Check, Mail, Phone } from "lucide-react";
-import aboutImage from "../assets/images/about-fruit.png";
+import logo from "../assets/images/OAVLOGO.png";
+// import aboutImage from "../assets/images/about-fruit.png";
 import { missionVisionData } from "../data/mission";
 import { leaders } from "../data/aboutContent";
 import map from "../assets/images/world-map2.webp";
@@ -21,7 +22,7 @@ interface AboutSectionProps {
   onReadMore?: () => void;
 }
 
-const defaultImage = aboutImage;
+const defaultImage = logo;
 
 const AboutSection: React.FC<AboutSectionProps> = ({
   badgeLabel = "About The Company",

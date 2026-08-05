@@ -1,7 +1,9 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
-import ScrollHomeButton from "../components/shared/ScrollHomeButton";
+import ScrollHomeButton, { FabStack, ImageFab } from "../components/shared/ScrollHomeButton";
+
+import hayat from "../assets/images/Big-Kiwi.png";
 
 const MainLayout = () => {
   return (
@@ -14,7 +16,15 @@ const MainLayout = () => {
       </main>
 
       <Footer />
-      <ScrollHomeButton />
+
+      <FabStack>
+        <ImageFab
+          src={hayat}
+          alt="Hayat Kiwi"
+          onClick={() => window.open("/hayat-kiwi", "_blank", "noopener,noreferrer")}
+        />
+        <ScrollHomeButton />
+      </FabStack>
     </div>
   );
 };

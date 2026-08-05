@@ -436,7 +436,7 @@ export default function FruitCalendarPopup() {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="inline-flex items-center gap-2 rounded-lg bg-[#1e3a5f] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#274c78]"
+        className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-[#193768] cursor-pointer"
       >
         View fruit calendar
       </button>

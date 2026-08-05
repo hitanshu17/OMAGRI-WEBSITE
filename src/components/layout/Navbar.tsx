@@ -11,8 +11,9 @@ const navLinks = [
   { id: "home", label: "Home" },
   { id: "about-us", label: "About Us" },
   { id: "our-products", label: "Our Products" },
-  { id: "contact-us", label: "Contact Us" },
 ];
+
+const contactLink = { id: "contact-us", label: "Contact Us" };
 
 const Navbar = () => {
   const [menu, setMenu] = useState(false);
@@ -44,7 +45,8 @@ const Navbar = () => {
 
   // Scroll-spy: highlight the nav link for the section currently in view
   useEffect(() => {
-    const sections = navLinks
+    const allLinks = [...navLinks, contactLink];
+    const sections = allLinks
       .map((link) => document.getElementById(link.id))
       .filter((el): el is HTMLElement => el !== null);
 
@@ -73,7 +75,7 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 w-full bg-white shadow-sm h-20 z-50">
       <div className="max-w-7xl mx-auto h-full flex items-center justify-between px-6 md:px-8">
-        {/* Logo */}
+        {/* Logo - left side */}
         <Link
           to="/"
           className="flex items-center gap-3"
@@ -82,41 +84,50 @@ const Navbar = () => {
             handleNavClick("home");
           }}
         >
-          <img src={logo} alt="logo" className="w-32 h-32 object-contain" />
+          <img src={logo} alt="logo" className="w-42 h-42 object-contain" />
         </Link>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-10">
-          {navLinks.map((link) => {
-            const isActive = activeId === link.id;
-            return (
-              <button
-                key={link.id}
-                onClick={() => handleNavClick(link.id)}
-                className="relative group pb-1"
-              >
-                <span
-                  className={`font-bold transition-colors duration-200 group-hover:text-[#193768] ${
-                    isActive ? "font-bold text-[#193768]" : "text-black"
-                  }`}
+        {/* Right side: nav links + contact button (desktop) / burger (mobile) */}
+        <div className="flex items-center gap-8">
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-10">
+            {navLinks.map((link) => {
+              const isActive = activeId === link.id;
+              return (
+                <button
+                  key={link.id}
+                  onClick={() => handleNavClick(link.id)}
+                  className="relative group pb-1"
                 >
-                  {link.label}
-                </span>
-                <span
-                  className={`absolute left-0 -bottom-5 h-1 w-full transition-transform duration-400 ease-out ${
-                    isActive
-                      ? "scale-x-100 origin-left"
-                      : "scale-x-0 origin-right group-hover:origin-left group-hover:scale-x-100"
-                  }`}
-                  style={{ backgroundColor: PRIMARY }}
-                />
-              </button>
-            );
-          })}
-        </div>
+                  <span
+                    className={`font-bold transition-colors duration-200 group-hover:text-[#193768] ${
+                      isActive ? "font-bold text-[#193768]" : "text-black"
+                    }`}
+                  >
+                    {link.label}
+                  </span>
+                  <span
+                    className={`absolute left-0 -bottom-5 h-1 w-full transition-transform duration-400 ease-out ${
+                      isActive
+                        ? "scale-x-100 origin-left"
+                        : "scale-x-0 origin-right group-hover:origin-left group-hover:scale-x-100"
+                    }`}
+                    style={{ backgroundColor: PRIMARY }}
+                  />
+                </button>
+              );
+            })}
 
-        {/* Right side: search + CTA (desktop) / burger (mobile) */}
-        <div className="flex items-center gap-4">
+            {/* Contact Us - highlighted button */}
+            <button
+              onClick={() => handleNavClick(contactLink.id)}
+              className="font-bold text-white px-6 py-2.5 rounded-full transition-all duration-200 hover:brightness-110 hover:shadow-md"
+              style={{ backgroundColor: PRIMARY }}
+            >
+              {contactLink.label}
+            </button>
+          </div>
+
           {/* Mobile burger */}
           <button
             className="md:hidden relative w-8 h-8 flex items-center justify-center"
@@ -159,9 +170,6 @@ const Navbar = () => {
             }}
           >
             <img src={logo} alt="logo" className="w-10 h-10 object-contain" />
-            {/* <span className="font-bold text-lg" style={{ color: PRIMARY }}>
-              OMM AGRI
-            </span> */}
           </Link>
           <button
             className="w-10 h-10 flex items-center justify-center rounded-md text-white transition-transform duration-300"
@@ -192,6 +200,15 @@ const Navbar = () => {
               </button>
             );
           })}
+
+          {/* Contact Us - highlighted in mobile menu too */}
+          <button
+            onClick={() => handleNavClick(contactLink.id)}
+            className="text-left px-6 py-4 font-bold text-white"
+            style={{ backgroundColor: PRIMARY }}
+          >
+            {contactLink.label}
+          </button>
         </div>
       </div>
     </nav>
