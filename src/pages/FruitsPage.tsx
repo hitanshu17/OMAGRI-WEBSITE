@@ -360,7 +360,7 @@ function FruitHero({
 
               {fruit.tagline && (
                 <p
-                  className="absolute left-0 top-[4%] hidden max-w-[9rem] text-xl font-bold leading-snug sm:block sm:max-w-xs sm:text-2xl lg:text-3xl"
+                  className="absolute left-0 top-[4%] hidden max-w-36 text-xl font-bold leading-snug sm:block sm:max-w-xs sm:text-2xl lg:text-3xl"
                   style={{
                     color: fruit.accent,
                     fontFamily: "'Fraunces', serif",
