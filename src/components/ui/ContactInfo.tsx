@@ -86,7 +86,7 @@ const ContactInfo: React.FC<ContactInfoPropsExtended> = ({
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-14 h-14 rounded-full flex items-center justify-center
-                                 bg-gradient-to-tr from-[#FEDA75] via-[#D62976] to-[#4F5BD5]
+                                 bg-linear-to-tr from-[#FEDA75] via-[#D62976] to-[#4F5BD5]
                                  ring-4 ring-white
                                  transition-transform duration-200 hover:scale-105 hover:z-10 relative"
                     >
