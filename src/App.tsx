@@ -5,6 +5,7 @@ import MainLayout from "./layout/MainLayout";
 import LandingPage from "./pages/LandingPage";
 import FruitPage from "./pages/FruitsPage";
 import LoadingPage from "./pages/LoadingPage";
+import HayatKiwiPage from "./pages/HayatKiwi";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -21,10 +22,10 @@ function App() {
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/hayat-kiwi" element={<HayatKiwiPage />} />
         </Route>
         <Route path="/:fruitName" element={<FruitPage />} />
       </Routes>
-
       <LoadingPage isLoading={isLoading} />
     </>
   );

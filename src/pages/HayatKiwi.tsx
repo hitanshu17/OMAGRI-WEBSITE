@@ -1,6 +1,6 @@
 import HeroSection from '../sections/HeroSection'
 
-const HayatKiwi = () => {
+const HayatKiwiPage = () => {
   return (
     <>
     <HeroSection />
@@ -9,4 +9,4 @@ const HayatKiwi = () => {
   )
 }
 
-export default HayatKiwi
+export default HayatKiwiPage

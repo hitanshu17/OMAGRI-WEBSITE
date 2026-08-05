@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 
 import logo from "../../assets/images/OAVLOGO.png";
@@ -7,18 +7,26 @@ import { scrollToSection } from "../../utils/scrollToSection";
 
 const PRIMARY = "#193768";
 
-const navLinks = [
-  { id: "home", label: "Home" },
-  { id: "about-us", label: "About Us" },
-  { id: "our-products", label: "Our Products" },
+type NavLink =
+  | { id: string; label: string; type: "scroll" }
+  | { id: string; label: string; type: "route"; path: string };
+
+const navLinks: NavLink[] = [
+  { id: "home", label: "Home", type: "scroll" },
+  { id: "about-us", label: "About Us", type: "scroll" },
+  { id: "our-products", label: "Our Products", type: "scroll" },
+  { id: "hayat-kiwi", label: "Hayat Kiwi", type: "route", path: "/hayat-kiwi" },
 ];
 
-const contactLink = { id: "contact-us", label: "Contact Us" };
+const contactLink: NavLink = { id: "contact-us", label: "Contact Us", type: "scroll" };
 
 const Navbar = () => {
   const [menu, setMenu] = useState(false);
   const [activeId, setActiveId] = useState("home");
   const sidebarRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isHome = location.pathname === "/";
 
   // Close sidebar on outside click
   useEffect(() => {
@@ -44,9 +52,12 @@ const Navbar = () => {
   }, [menu]);
 
   // Scroll-spy: highlight the nav link for the section currently in view
+  // Only relevant on the homepage, since that's the only place these section IDs exist
   useEffect(() => {
-    const allLinks = [...navLinks, contactLink];
-    const sections = allLinks
+    if (!isHome) return;
+
+    const scrollLinks = [...navLinks.filter((l) => l.type === "scroll"), contactLink];
+    const sections = scrollLinks
       .map((link) => document.getElementById(link.id))
       .filter((el): el is HTMLElement => el !== null);
 
@@ -65,11 +76,103 @@ const Navbar = () => {
 
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
-  }, []);
+  }, [isHome]);
 
-  const handleNavClick = (id: string) => {
+  // Handles clicks on scroll-type links. If we're already on "/", scroll directly.
+  // If we're on another route (e.g. /hayat-kiwi), navigate home first and pass
+  // the target section id via router state, so Home can scroll to it after mount.
+  const handleScrollClick = (id: string) => {
     setMenu(false);
-    scrollToSection(id);
+    if (isHome) {
+      scrollToSection(id);
+    } else {
+      navigate("/", { state: { scrollTo: id } });
+    }
+  };
+
+  const renderDesktopLink = (link: NavLink) => {
+    const isActive =
+      link.type === "route" ? location.pathname === link.path : isHome && activeId === link.id;
+
+    if (link.type === "route") {
+      return (
+        <Link key={link.id} to={link.path} className="relative group pb-1">
+          <span
+            className={`font-bold transition-colors duration-200 group-hover:text-[#193768] ${
+              isActive ? "font-bold text-[#193768]" : "text-black"
+            }`}
+          >
+            {link.label}
+          </span>
+          <span
+            className={`absolute left-0 -bottom-5 h-1 w-full transition-transform duration-400 ease-out ${
+              isActive
+                ? "scale-x-100 origin-left"
+                : "scale-x-0 origin-right group-hover:origin-left group-hover:scale-x-100"
+            }`}
+            style={{ backgroundColor: PRIMARY }}
+          />
+        </Link>
+      );
+    }
+
+    return (
+      <button
+        key={link.id}
+        onClick={() => handleScrollClick(link.id)}
+        className="relative group pb-1"
+      >
+        <span
+          className={`font-bold transition-colors duration-200 group-hover:text-[#193768] ${
+            isActive ? "font-bold text-[#193768]" : "text-black"
+          }`}
+        >
+          {link.label}
+        </span>
+        <span
+          className={`absolute left-0 -bottom-5 h-1 w-full transition-transform duration-400 ease-out ${
+            isActive
+              ? "scale-x-100 origin-left"
+              : "scale-x-0 origin-right group-hover:origin-left group-hover:scale-x-100"
+          }`}
+          style={{ backgroundColor: PRIMARY }}
+        />
+      </button>
+    );
+  };
+
+  const renderMobileLink = (link: NavLink) => {
+    const isActive =
+      link.type === "route" ? location.pathname === link.path : isHome && activeId === link.id;
+
+    if (link.type === "route") {
+      return (
+        <Link
+          key={link.id}
+          to={link.path}
+          onClick={() => setMenu(false)}
+          className={`text-left px-6 py-4 border-b border-gray-100 font-medium transition-colors ${
+            isActive ? "" : "text-gray-800 hover:text-[#193768]"
+          }`}
+          style={{ color: isActive ? PRIMARY : undefined }}
+        >
+          {link.label}
+        </Link>
+      );
+    }
+
+    return (
+      <button
+        key={link.id}
+        onClick={() => handleScrollClick(link.id)}
+        className={`text-left px-6 py-4 border-b border-gray-100 font-medium transition-colors ${
+          isActive ? "" : "text-gray-800 hover:text-[#193768]"
+        }`}
+        style={{ color: isActive ? PRIMARY : undefined }}
+      >
+        {link.label}
+      </button>
+    );
   };
 
   return (
@@ -81,7 +184,7 @@ const Navbar = () => {
           className="flex items-center gap-3"
           onClick={(e) => {
             e.preventDefault();
-            handleNavClick("home");
+            handleScrollClick("home");
           }}
         >
           <img src={logo} alt="logo" className="w-42 h-42 object-contain" />
@@ -91,36 +194,11 @@ const Navbar = () => {
         <div className="flex items-center gap-8">
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-10">
-            {navLinks.map((link) => {
-              const isActive = activeId === link.id;
-              return (
-                <button
-                  key={link.id}
-                  onClick={() => handleNavClick(link.id)}
-                  className="relative group pb-1"
-                >
-                  <span
-                    className={`font-bold transition-colors duration-200 group-hover:text-[#193768] ${
-                      isActive ? "font-bold text-[#193768]" : "text-black"
-                    }`}
-                  >
-                    {link.label}
-                  </span>
-                  <span
-                    className={`absolute left-0 -bottom-5 h-1 w-full transition-transform duration-400 ease-out ${
-                      isActive
-                        ? "scale-x-100 origin-left"
-                        : "scale-x-0 origin-right group-hover:origin-left group-hover:scale-x-100"
-                    }`}
-                    style={{ backgroundColor: PRIMARY }}
-                  />
-                </button>
-              );
-            })}
+            {navLinks.map(renderDesktopLink)}
 
             {/* Contact Us - highlighted button */}
             <button
-              onClick={() => handleNavClick(contactLink.id)}
+              onClick={() => handleScrollClick(contactLink.id)}
               className="font-bold text-white px-6 py-2.5 rounded-full transition-all duration-200 hover:brightness-110 hover:shadow-md"
               style={{ backgroundColor: PRIMARY }}
             >
@@ -166,7 +244,7 @@ const Navbar = () => {
             className="flex items-center gap-2"
             onClick={(e) => {
               e.preventDefault();
-              handleNavClick("home");
+              handleScrollClick("home");
             }}
           >
             <img src={logo} alt="logo" className="w-10 h-10 object-contain" />
@@ -185,25 +263,11 @@ const Navbar = () => {
         </div>
 
         <div className="flex flex-col">
-          {navLinks.map((link) => {
-            const isActive = activeId === link.id;
-            return (
-              <button
-                key={link.id}
-                onClick={() => handleNavClick(link.id)}
-                className={`text-left px-6 py-4 border-b border-gray-100 font-medium transition-colors ${
-                  isActive ? "" : "text-gray-800 hover:text-[#193768]"
-                }`}
-                style={{ color: isActive ? PRIMARY : undefined }}
-              >
-                {link.label}
-              </button>
-            );
-          })}
+          {navLinks.map(renderMobileLink)}
 
           {/* Contact Us - highlighted in mobile menu too */}
           <button
-            onClick={() => handleNavClick(contactLink.id)}
+            onClick={() => handleScrollClick(contactLink.id)}
             className="text-left px-6 py-4 font-bold text-white"
             style={{ backgroundColor: PRIMARY }}
           >

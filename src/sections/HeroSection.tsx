@@ -439,7 +439,7 @@ const HeroSection = () => {
           <div className="mt-1.5 flex items-baseline justify-between">
             <span className="kiwi-display text-base text-[#F5F2E6]">
               {activeStage === STAGE_COUNT - 1
-                ? "OMM Agri Vila LLP"
+                ? "OMM AGRI VILLA LLP"
                 : STAGES[activeStage].eyebrow}
             </span>
             <span className="kiwi-display text-sm text-[#C6E24A]">
