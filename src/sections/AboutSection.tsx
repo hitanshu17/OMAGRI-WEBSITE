@@ -1,11 +1,12 @@
 import React from "react";
-import { Check } from "lucide-react";
-import aboutImage from "../assets/images/about-rb.png";
+import { Check, Mail, Phone } from "lucide-react";
+import logo from "../assets/images/OAVLOGO.png";
+// import aboutImage from "../assets/images/about-fruit.png";
 import { missionVisionData } from "../data/mission";
 import { leaders } from "../data/aboutContent";
-import map from "../assets/images/world-map.jpg";
+import map from "../assets/images/world-map2.webp";
 import PresenceInIndia from "../components/ui/Presence";
-import indiaMap from "../assets/images/india-map.png";
+import indiaMap from "../assets/images/India.png";
 import WhyChooseUs from "../components/ui/WhyChooseUs";
 
 interface AboutSectionProps {
@@ -21,7 +22,7 @@ interface AboutSectionProps {
   onReadMore?: () => void;
 }
 
-const defaultImage = aboutImage;
+const defaultImage = logo;
 
 const AboutSection: React.FC<AboutSectionProps> = ({
   badgeLabel = "About The Company",
@@ -31,7 +32,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
   // buttonLabel = "Read More",
   imageSrc = defaultImage,
   imageAlt = "Fresh apples",
-  yearsBadge = "60+",
+  yearsBadge = "30+",
   yearsLabel = "Year's Experience",
   // onReadMore,
 }) => {
@@ -50,7 +51,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
 
             {/* Years badge */}
             <div
-              className="absolute -bottom-6 right-0 flex h-40 w-40 flex-col items-center justify-center bg-[#6f9349] text-center text-white sm:h-44 sm:w-44"
+              className="absolute -bottom-6 right-0 flex h-40 w-40 flex-col items-center justify-center bg-[#193768] text-center text-white sm:h-44 sm:w-44"
               style={{
                 clipPath:
                   "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
@@ -72,7 +73,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
 
           {/* Content */}
           <div>
-            <span className="inline-block rounded-full bg-[#eef1e2] px-5 py-2 text-sm font-medium text-[#6f9349]">
+            <span className="inline-block rounded-full bg-[#193768] px-5 py-2 text-md font-medium text-white">
               {badgeLabel}
             </span>
 
@@ -85,58 +86,19 @@ const AboutSection: React.FC<AboutSectionProps> = ({
             </p>
 
             <div className="mt-6 flex items-start gap-3">
-              <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-sm bg-[#6f9349]">
+              <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-sm bg-[#193768]">
                 <Check size={14} className="text-white" strokeWidth={3} />
               </span>
               <p className="text-base leading-relaxed text-gray-600 sm:text-lg">
                 {description}
               </p>
             </div>
-
-            {/* <button
-              onClick={onReadMore}
-              className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#6f9349] px-7 py-4 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-[#5d7d3d]"
-            >
-              <Minus size={18} strokeWidth={3} />
-              {buttonLabel}
-            </button> */}
           </div>
         </div>
       </div>
 
-      {/* Leadership */}
-      <div className="bg-[#f6fced] px-6 py-20 md:px-16">
-        <div className="mx-auto mb-12 max-w-2xl text-center">
-          <h2 className="mb-3 text-3xl font-bold text-[#16241b] md:text-4xl">
-            Leadership &amp; Vision
-          </h2>
-          <p className="text-gray-500">
-            Guiding the next generation of agri-trade with a lasting commitment
-            to national expansion.
-          </p>
-        </div>
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-3 text-center">
-          {leaders.map((leader) => (
-            <div
-              key={leader.name}
-              className="rounded-xl border border-black/5 bg-[#faf7f1] p-8"
-            >
-              <div className="mb-4 mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#6f9349] text-white">
-                {leader.initials}
-              </div>
-              <h3 className="text-lg font-semibold text-[#16241b]">
-                {leader.name}
-              </h3>
-              <span className="text-xs font-semibold uppercase tracking-widest text-[#d97b3c]">
-                {leader.title}
-              </span>
-              <p className="mt-3 text-sm leading-relaxed text-gray-500">
-                {leader.bio}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+      {/* Why choose us */}
+      <WhyChooseUs />
 
       {/* Mission & Vision */}
       <div className="px-6 py-16 md:px-12 lg:px-20">
@@ -148,7 +110,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
                 key={item.title}
                 className="flex h-full flex-col rounded-2xl bg-white p-8 shadow-md sm:p-10"
               >
-                <div className="mb-6 flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-[#6f9349]">
+                <div className="mb-6 flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-[#193768]">
                   <Icon size={36} className="text-white" strokeWidth={1.5} />
                 </div>
 
@@ -165,8 +127,55 @@ const AboutSection: React.FC<AboutSectionProps> = ({
         </div>
       </div>
 
-      {/* Why choose us */}
-      <WhyChooseUs />
+      {/* Leadership */}
+      <div className="bg-[#f7f8fa] px-6 py-20 md:px-16">
+        <div className="mx-auto mb-14 max-w-2xl text-center">
+          <h2 className="mb-3 text-3xl font-bold text-[#0f1e33] md:text-4xl">
+            Leadership &amp; Vision
+          </h2>
+          <p className="text-gray-500">
+            Guiding the next generation of agri-trade with a lasting commitment
+            to national expansion.
+          </p>
+        </div>
+
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-3">
+          {leaders.map((leader) => (
+            <div
+              key={leader.name}
+              className="flex flex-col overflow-hidden rounded-2xl border border-[#193768]/10 bg-white shadow-sm transition-shadow hover:shadow-md"
+            >
+              {/* Header */}
+              <div className="flex flex-col items-center px-8 pt-8 pb-6 text-center">
+                <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#193768] text-base font-semibold text-white ring-4 ring-[#193768]/10">
+                  {leader.initials}
+                </div>
+                <h3 className="text-lg font-semibold text-[#0f1e33]">
+                  {leader.name}
+                </h3>
+                <span className="mt-1 text-xs font-semibold uppercase tracking-widest text-[#b5622f]">
+                  {leader.title}
+                </span>
+                <p className="mt-4 text-sm leading-relaxed text-gray-500">
+                  {leader.bio}
+                </p>
+              </div>
+
+              {/* Contact footer */}
+              <div className="mt-auto space-y-2.5 border-t border-[#193768]/10 bg-[#193768]/3 px-8 py-5 text-left">
+                <div className="flex items-center gap-3 text-sm text-[#344054]">
+                  <Phone className="h-4 w-4 shrink-0 text-[#193768]" />
+                  <span>{leader.phone}</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm text-[#344054]">
+                  <Mail className="h-4 w-4 shrink-0 text-[#193768]" />
+                  <span className="truncate">{leader.email}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* Our Network */}
       <section className="px-6 py-16 md:px-12 lg:px-20">
@@ -177,8 +186,8 @@ const AboutSection: React.FC<AboutSectionProps> = ({
 
           <p className="mt-8 text-base leading-relaxed text-gray-500 sm:text-lg">
             In order to become the most dependable business partner for our
-            suppliers throughout the world, RB Fruitech Pvt. Ltd. aims to
-            deliver an exceptional client experience.
+            suppliers throughout the world, OMM AGRI VILLA LLP aims to deliver
+            an exceptional client experience.
           </p>
 
           <p className="mt-6 text-base leading-relaxed text-gray-500 sm:text-lg">
@@ -195,7 +204,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
       {/* Our Presence */}
       <PresenceInIndia
         eyebrow="Presence"
-        heading="Omm Agri Villa LLP in India"
+        heading="OMM AGRI VILLA LLP in India"
         listLabel="States Covered"
         image={indiaMap}
         imageAlt="Illustrated map of India with cultural icons"

@@ -65,7 +65,7 @@ const GetInTouch: React.FC<GetInTouchProps> = ({
           <p className="text-gray-500 mb-8">{subheading}</p>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-            <div className="border border-gray-200 rounded-xl px-5 py-3 focus-within:border-green-500 transition-colors">
+            <div className="border border-gray-200 rounded-xl px-5 py-3 focus-within:border-[#193768] transition-colors">
               <label htmlFor="name" className="sr-only">
                 Your Name
               </label>
@@ -81,7 +81,7 @@ const GetInTouch: React.FC<GetInTouchProps> = ({
               />
             </div>
 
-            <div className="border border-gray-200 rounded-xl px-5 py-3 focus-within:border-green-500 transition-colors">
+            <div className="border border-gray-200 rounded-xl px-5 py-3 focus-within:border-[#193768] transition-colors">
               <label htmlFor="email" className="sr-only">
                 Your Email
               </label>
@@ -97,7 +97,7 @@ const GetInTouch: React.FC<GetInTouchProps> = ({
               />
             </div>
 
-            <div className="border border-gray-200 rounded-xl px-5 py-3 focus-within:border-green-500 transition-colors">
+            <div className="border border-gray-200 rounded-xl px-5 py-3 focus-within:border-[#193768] transition-colors">
               <label htmlFor="contactNumber" className="sr-only">
                 Contact Number
               </label>
@@ -113,7 +113,7 @@ const GetInTouch: React.FC<GetInTouchProps> = ({
               />
             </div>
 
-            <div className="border border-gray-200 rounded-xl px-5 py-3 focus-within:border-green-500 transition-colors">
+            <div className="border border-gray-200 rounded-xl px-5 py-3 focus-within:border-[#193768] transition-colors">
               <label htmlFor="message" className="sr-only">
                 Your Message
               </label>
@@ -132,7 +132,7 @@ const GetInTouch: React.FC<GetInTouchProps> = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="self-start bg-lime-600 hover:bg-lime-700 disabled:opacity-60 text-white font-semibold px-8 py-3 rounded-full transition-colors"
+              className="self-start bg-[#193768] disabled:opacity-60 text-white font-semibold px-8 py-3 rounded-full transition-colors cursor-pointer"
             >
               {isSubmitting ? "Sending..." : submitLabel}
             </button>

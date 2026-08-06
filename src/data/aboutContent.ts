@@ -2,20 +2,26 @@ export const leaders = [
   {
     initials: "MG",
     name: "Mukesh Gaba",
-    title: "Founder & Managing Partner",
-    bio: "With decades of experience in the agri-trade sector, Mukesh leads sourcing and quality strategy across every partner farm we work with.",
+    title: "Founder & Partner",
+    bio: "With over 30 years of experience in the fresh fruit industry, he built the company from the ground up through unwavering dedication, integrity, and a relentless pursuit of quality. A hands-on leader, he remains actively involved in every aspect of the business, driving its continued growth through experience, vision, and strong industry relationships.",
+    phone: "+91 9810150027",
+    email: "mukeshgaba@ommagrivilla.in",
   },
   {
     initials: "KG",
     name: "Kanav Gaba",
-    title: "Founder & Managing Partner",
+    title: "Co-Founder & Partner",
     bio: "Kanav brings a modern perspective to the business, driving our expansion into new markets while staying true to our founding commitment to quality.",
+    phone: "+91 9536911626",
+    email: "kanavgaba@ommagrivilla.in",
   },
   {
     initials: "JG",
     name: "Jitesh Gaba",
-    title: "Head of Purchase & Imports",
-    bio: "Jitesh brings a modern perspective to the business, driving our expansion into new markets while staying true to our founding commitment to quality.",
+    title: "Head of Global Sourcing & Imports",
+    bio: "Combines expertise in international procurement, imports, and strategic marketing with a results-driven approach. Committed to quality, strong global partnerships, and sustainable growth.",
+    phone: "+91 9999041004",
+    email: "jiteshgaba@ommagrivilla.in",
   },
 ];
 

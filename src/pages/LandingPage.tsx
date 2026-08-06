@@ -1,14 +1,16 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-import HeroSection from "../sections/HeroSection";
 import AboutSection from "../sections/AboutSection";
 import BrandSection from "../sections/BrandSection";
 import OurProducts from "../sections/OurProducts";
 import ContactSection from "../sections/ContactSection";
 import CustomerReviews from "../components/ui/Testimonials";
+import { useScrollToHash } from "../hooks/useScrollToHash";
+import FreshFruitHero from "../sections/FruitHeroSection";
 
 const LandingPage = () => {
+  useScrollToHash();
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -18,7 +20,8 @@ const LandingPage = () => {
   return (
     <div className="bg-white">
       {/* Hero carousal */}
-      <HeroSection />
+      {/* <HeroSection /> */}
+      <FreshFruitHero />
 
       {/* About Section */}
       <AboutSection />

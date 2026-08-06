@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion, type Variants } from "framer-motion";
 
 type Position = "top" | "bottom";
@@ -62,16 +62,21 @@ const ITEMS: WhyChooseUsItem[] = [
   },
 ];
 
-const ACCENT = "#5C7F3A"; // olive-green accent from the reference design
-const ACCENT_TINT = "#EEF3E7"; // soft green tint behind each circle
+const ACCENT = "#193768"; // primary navy
+const ACCENT_TINT = "#E9EDF4"; // soft navy tint behind each circle
+const ACCENT_LINE = "#C7CEDA"; // muted navy-gray for the dashed connector
 
 /** Bracket-box icon matching the reference design's mark */
-const BoxScanIcon: React.FC<{ className?: string }> = ({ className }) => (
+const BoxScanIcon: React.FC<React.SVGProps<SVGSVGElement>> = ({
+  className,
+  ...props
+}) => (
   <svg
     viewBox="0 0 48 48"
     fill="none"
     className={className}
     xmlns="http://www.w3.org/2000/svg"
+    {...props}
   >
     {/* corner brackets */}
     <path
@@ -133,9 +138,7 @@ function buildZigzagPath(count: number, width: number, height: number) {
     const curr = points[i];
 
     const midX = (prev.x + curr.x) / 2;
-    const waveY = i % 2 === 0
-      ? centerY - amplitude
-      : centerY + amplitude;
+    const waveY = i % 2 === 0 ? centerY - amplitude : centerY + amplitude;
 
     d += `
       C
@@ -185,7 +188,7 @@ const WhyChooseUs: React.FC = () => {
 
   return (
     <section className="w-full py-16 sm:py-20 px-4 sm:px-6">
-      <h2 className="text-center text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 mb-10 sm:mb-14">
+      <h2 className="text-center text-3xl sm:text-4xl font-extrabold tracking-tight text-[#0f1e33] mb-10 sm:mb-14">
         Why Choose Us?
       </h2>
 
@@ -194,7 +197,7 @@ const WhyChooseUs: React.FC = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
-        className="max-w-6xl mx-auto rounded-2xl bg-slate-50/80"
+        className="max-w-6xl mx-auto rounded-2xl bg-[#193768]/3 border border-[#193768]/10"
       >
         {/* ---------- Desktop / tablet zigzag layout ---------- */}
         <div className="hidden md:block relative px-8 lg:px-12 py-14">
@@ -207,7 +210,7 @@ const WhyChooseUs: React.FC = () => {
           >
             <motion.path
               d={pathD}
-              stroke="#CBD5C7"
+              stroke={ACCENT_LINE}
               strokeWidth="2"
               strokeDasharray="6 8"
               strokeLinecap="round"
@@ -256,8 +259,7 @@ const WhyChooseUs: React.FC = () => {
           <div
             className="absolute left-11 top-10 bottom-10 w-px"
             style={{
-              backgroundImage:
-                "repeating-linear-gradient(to bottom, #CBD5C7 0 6px, transparent 6px 14px)",
+              backgroundImage: `repeating-linear-gradient(to bottom, ${ACCENT_LINE} 0 6px, transparent 6px 14px)`,
             }}
           />
           <div className="flex flex-col gap-10">
@@ -271,10 +273,10 @@ const WhyChooseUs: React.FC = () => {
                   <CircleIcon number={item.number} />
                 </div>
                 <div className="pt-2">
-                  <h3 className="text-lg font-extrabold uppercase tracking-tight text-slate-900">
+                  <h3 className="text-lg font-extrabold uppercase tracking-tight text-[#0f1e33]">
                     {item.title}
                   </h3>
-                  <p className="mt-1 text-sm text-slate-500 leading-relaxed">
+                  <p className="mt-1 text-sm text-gray-500 leading-relaxed">
                     {item.description}
                   </p>
                 </div>
@@ -292,36 +294,42 @@ const TextBlock: React.FC<{ title: string; description: string }> = ({
   description,
 }) => (
   <div className="max-w-45 lg:max-w-50">
-    <h3 className="text-sm lg:text-base font-extrabold uppercase tracking-tight text-slate-900 mb-1.5">
+    <h3 className="text-sm lg:text-base font-extrabold uppercase tracking-tight text-[#0f1e33] mb-1.5">
       {title}
     </h3>
-    <p className="text-xs lg:text-[13px] text-slate-500 leading-relaxed">
+    <p className="text-xs lg:text-[13px] text-gray-500 leading-relaxed">
       {description}
     </p>
   </div>
 );
 
-const CircleIcon: React.FC<{ number: string }> = ({ number }) => (
-  <div className="group relative">
-    <div
-      className="w-20 h-20 lg:w-24 lg:h-24 rounded-full flex items-center justify-center transition-colors duration-300 ease-out cursor-pointer"
-      style={{ backgroundColor: ACCENT_TINT }}
-      onMouseEnter={(e) => {
-        (e.currentTarget as HTMLDivElement).style.backgroundColor = ACCENT;
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLDivElement).style.backgroundColor = ACCENT_TINT;
-      }}
-    >
-      <BoxScanIcon className="w-8 h-8 lg:w-9 lg:h-9 text-(--icon-color) transition-colors duration-300 ease-out group-hover:text-white!" />
+const CircleIcon: React.FC<{ number: string }> = ({ number }) => {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <div className="relative">
+      <div
+        className="w-20 h-20 lg:w-24 lg:h-24 rounded-full flex items-center justify-center transition-colors duration-300 ease-out cursor-pointer"
+        style={{ backgroundColor: hovered ? ACCENT : ACCENT_TINT }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        <BoxScanIcon
+          className="w-8 h-8 lg:w-9 lg:h-9 transition-colors duration-300 ease-out"
+          style={{ color: hovered ? "#fff" : ACCENT }}
+        />
+      </div>
+      <span
+        className="absolute -top-1.5 -right-1.5 w-8 h-8 rounded-full bg-white flex items-center justify-center text-xs font-bold"
+        style={{
+          color: ACCENT,
+          boxShadow: "0 2px 8px rgba(15, 23, 42, 0.12)",
+        }}
+      >
+        {number}
+      </span>
     </div>
-    <span
-      className="absolute -top-1.5 -right-1.5 w-8 h-8 rounded-full bg-white shadow-md flex items-center justify-center text-xs font-bold text-slate-900"
-      style={{ boxShadow: "0 2px 8px rgba(15, 23, 42, 0.12)" }}
-    >
-      {number}
-    </span>
-  </div>
-);
+  );
+};
 
 export default WhyChooseUs;
