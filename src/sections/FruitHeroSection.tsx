@@ -217,7 +217,9 @@ export default function FreshFruitHero() {
   );
 
   return (
-    <div className="relative w-full h-[90vh] min-h-105 overflow-hidden bg-black/40 select-none">
+    <div 
+    id="home"
+    className="relative w-full h-[90vh] min-h-105 overflow-hidden bg-black/40 select-none">
       {/* Background layers */}
       <AnimatePresence custom={direction} initial={false}>
         <motion.div
