@@ -85,19 +85,19 @@ const InfiniteLogoCarousel: React.FC<InfiniteLogoCarouselProps> = ({
       />
 
       <div
-        className="flex w-max items-center gap-8 sm:gap-12 md:gap-16 lg:gap-20 group-hover:[animation-play-state:paused]"
+        className="flex w-max items-stretch gap-4 sm:gap-5 md:gap-6 lg:gap-8 group-hover:[animation-play-state:paused]"
         style={{ animation: `${animationName} ${speed}s linear infinite` }}
       >
         {/* Logos rendered twice back-to-back for a seamless loop */}
         {[...logos, ...logos].map((logo, i) => (
           <div
             key={`${logo.alt}-${i}`}
-            className="relative z-0 flex h-10 shrink-0 items-center justify-center transition-transform duration-300 ease-out hover:z-20 hover:scale-125 sm:h-14 md:h-16 lg:h-20"
+            className="relative z-0 flex h-20 w-32 shrink-0 items-center justify-center rounded-xl border border-gray-200 bg-white p-3 shadow-sm transition-all duration-300 ease-out hover:z-20 hover:scale-110 hover:shadow-md sm:h-24 sm:w-40 sm:p-4 md:h-28 md:w-48 lg:h-32 lg:w-56"
           >
             <img
               src={logo.src}
               alt={logo.alt}
-              className="max-h-full w-auto object-contain transition duration-300 ease-out"
+              className="max-h-full max-w-full object-contain transition duration-300 ease-out"
               draggable={false}
             />
           </div>

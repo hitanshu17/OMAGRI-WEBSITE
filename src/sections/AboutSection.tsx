@@ -1,6 +1,7 @@
 import React from "react";
 import { Check, Mail, Phone } from "lucide-react";
-import aboutImage from "../assets/images/about-fruit.png";
+import logo from "../assets/images/OAVLOGO.png";
+// import aboutImage from "../assets/images/about-fruit.png";
 import { missionVisionData } from "../data/mission";
 import { leaders } from "../data/aboutContent";
 import map from "../assets/images/world-map2.webp";
@@ -21,7 +22,7 @@ interface AboutSectionProps {
   onReadMore?: () => void;
 }
 
-const defaultImage = aboutImage;
+const defaultImage = logo;
 
 const AboutSection: React.FC<AboutSectionProps> = ({
   badgeLabel = "About The Company",
@@ -92,15 +93,37 @@ const AboutSection: React.FC<AboutSectionProps> = ({
                 {description}
               </p>
             </div>
-
-            {/* <button
-              onClick={onReadMore}
-              className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#6f9349] px-7 py-4 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-[#5d7d3d]"
-            >
-              <Minus size={18} strokeWidth={3} />
-              {buttonLabel}
-            </button> */}
           </div>
+        </div>
+      </div>
+
+      {/* Why choose us */}
+      <WhyChooseUs />
+
+      {/* Mission & Vision */}
+      <div className="px-6 py-16 md:px-12 lg:px-20">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-2">
+          {missionVisionData.map((item) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={item.title}
+                className="flex h-full flex-col rounded-2xl bg-white p-8 shadow-md sm:p-10"
+              >
+                <div className="mb-6 flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-[#193768]">
+                  <Icon size={36} className="text-white" strokeWidth={1.5} />
+                </div>
+
+                <h3 className="mb-4 text-2xl font-extrabold text-[#16241b]">
+                  {item.title}
+                </h3>
+
+                <p className="text-base leading-relaxed text-gray-600 sm:text-lg">
+                  {item.description}
+                </p>
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -154,36 +177,6 @@ const AboutSection: React.FC<AboutSectionProps> = ({
         </div>
       </div>
 
-      {/* Mission & Vision */}
-      <div className="px-6 py-16 md:px-12 lg:px-20">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-2">
-          {missionVisionData.map((item) => {
-            const Icon = item.icon;
-            return (
-              <div
-                key={item.title}
-                className="flex h-full flex-col rounded-2xl bg-white p-8 shadow-md sm:p-10"
-              >
-                <div className="mb-6 flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-[#193768]">
-                  <Icon size={36} className="text-white" strokeWidth={1.5} />
-                </div>
-
-                <h3 className="mb-4 text-2xl font-extrabold text-[#16241b]">
-                  {item.title}
-                </h3>
-
-                <p className="text-base leading-relaxed text-gray-600 sm:text-lg">
-                  {item.description}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Why choose us */}
-      <WhyChooseUs />
-
       {/* Our Network */}
       <section className="px-6 py-16 md:px-12 lg:px-20">
         <div className="mx-auto max-w-4xl text-center">
@@ -193,8 +186,8 @@ const AboutSection: React.FC<AboutSectionProps> = ({
 
           <p className="mt-8 text-base leading-relaxed text-gray-500 sm:text-lg">
             In order to become the most dependable business partner for our
-            suppliers throughout the world, OMM AGRI VILLA LLP aims to
-            deliver an exceptional client experience.
+            suppliers throughout the world, OMM AGRI VILLA LLP aims to deliver
+            an exceptional client experience.
           </p>
 
           <p className="mt-6 text-base leading-relaxed text-gray-500 sm:text-lg">
