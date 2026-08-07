@@ -10,8 +10,8 @@ export const leaders = [
   {
     initials: "KG",
     name: "Kanav Gaba",
-    title: "Co-Founder & Partner",
-    bio: "Kanav brings a modern perspective to the business, driving our expansion into new markets while staying true to our founding commitment to quality.",
+    title: "The Fruit Counsel",
+    bio: "After completing my B.Com LL.B, I gained professional experience before joining my family's generations-old fruit business. Combining legal knowledge with our legacy,  co-founded OMM AGRI VILLA LLP to specialize in the import and trading of premium fresh fruits. Today, I lead the company's sales, supplier partnerships, and business growth across the imported fruit industry.",
     phone: "+91 9536911626",
     email: "kanavgaba@ommagrivilla.in",
   },

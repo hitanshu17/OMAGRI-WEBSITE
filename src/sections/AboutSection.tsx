@@ -26,7 +26,7 @@ const defaultImage = logo;
 
 const AboutSection: React.FC<AboutSectionProps> = ({
   badgeLabel = "About The Company",
-  heading = "With the experience of four generations",
+  heading = "With the experience of three generations",
   intro = "OMM AGRI VILLA LLP stands as a premier trusted importer and trader of premium global fruits. Rooted in a true dedication to integrity and excellence, we are able to prioritize the finest produce from international orchards to serve the diverse needs of the Indian market.",
   description = "Our philosophy combines the traditional value of honesty and commitment with modern, forward-looking techniques. Adopting the gap between physical growers and local distributors, one trusted relationship at a time.",
   // buttonLabel = "Read More",
