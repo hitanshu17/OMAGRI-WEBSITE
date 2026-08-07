@@ -1,13 +1,20 @@
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import fssai from "../../assets/images/fssai.png";
 import logo from "../../assets/images/OAVLOGO.png";
 import { FaLinkedinIn, FaInstagram } from "react-icons/fa";
+import { scrollToSection } from "../../utils/scrollToSection";
 
-const menuLinks = [
-  { label: "Home", href: "/" },
-  { label: "About Us", href: "/about" },
-  { label: "Our Produce", href: "/produce" },
-  { label: "Hayat Kiwi", href: "/hayat-kiwi" },
-  { label: "Contact", href: "/contact" },
+type FooterLink =
+  | { id: string; label: string; type: "scroll" }
+  | { id: string; label: string; type: "route"; path: string };
+
+// Mirrors Navbar's navLinks + contactLink, so IDs actually match the sections on Home
+const menuLinks: FooterLink[] = [
+  { id: "home", label: "Home", type: "scroll" },
+  { id: "about-us", label: "About Us", type: "scroll" },
+  { id: "our-products", label: "Our Products", type: "scroll" },
+  { id: "hayat-kiwi", label: "Hayat Kiwi", type: "route", path: "/hayat-kiwi" },
+  { id: "contact-us", label: "Contact", type: "scroll" },
 ];
 
 const socialLinks = [
@@ -17,6 +24,47 @@ const socialLinks = [
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isHome = location.pathname === "/";
+
+  // Same behavior as Navbar: scroll directly if on Home, otherwise navigate home
+  // and pass the target section id via router state.
+  const handleScrollClick = (id: string) => {
+    if (isHome) {
+      scrollToSection(id);
+    } else {
+      navigate("/", { state: { scrollTo: id } });
+    }
+  };
+
+  const renderMenuLink = (link: FooterLink) => {
+    if (link.type === "route") {
+      return (
+        <Link
+          to={link.path}
+          className="group inline-flex items-center text-sm text-neutral-600 sm:text-base"
+        >
+          <span className="relative transition-colors group-hover:text-[#1f3a2e]">
+            {link.label}
+            <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-[#1f3a2e] transition-all duration-300 group-hover:w-full" />
+          </span>
+        </Link>
+      );
+    }
+
+    return (
+      <button
+        onClick={() => handleScrollClick(link.id)}
+        className="group inline-flex items-center text-sm text-neutral-600 sm:text-base"
+      >
+        <span className="relative transition-colors group-hover:text-[#1f3a2e]">
+          {link.label}
+          <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-[#1f3a2e] transition-all duration-300 group-hover:w-full" />
+        </span>
+      </button>
+    );
+  };
 
   return (
     <footer className="border-t border-neutral-200 bg-white">
@@ -68,18 +116,8 @@ const Footer = () => {
               Menu
             </h3>
             <ul className="mt-5 space-y-3.5">
-              {menuLinks.map(({ label, href }) => (
-                <li key={label}>
-                  <a
-                    href={href}
-                    className="group inline-flex items-center text-sm text-neutral-600 sm:text-base"
-                  >
-                    <span className="relative transition-colors group-hover:text-[#1f3a2e]">
-                      {label}
-                      <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-[#1f3a2e] transition-all duration-300 group-hover:w-full" />
-                    </span>
-                  </a>
-                </li>
+              {menuLinks.map((link) => (
+                <li key={link.id}>{renderMenuLink(link)}</li>
               ))}
             </ul>
           </div>
