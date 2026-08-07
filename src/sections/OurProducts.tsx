@@ -1,18 +1,18 @@
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-import apple from "../assets/images/apple-fruit.jpg";
-import orange from "../assets/images/orange-fruit.avif";
-import kiwi from "../assets/images/kiwi-fruit.jpeg";
-import grape from "../assets/images/grape-fruit.jpg";
-import pears from "../assets/images/pears.jpg";
-import avacado from "../assets/images/avacado-fruit.jpg";
-import mandarin from "../assets/images/mandarin.jpg";
-import plum from "../assets/images/plum.webp";
-import cherry from "../assets/images/cherry.jpg";
-import blueberry from "../assets/images/blueberry.webp";
-import dragonfruit from "../assets/images/Dragonfruit.webp";
-import tamarind from "../assets/images/tamarind.avif";
+import apple from "../assets/images/Pink-Lady-Apple.jpg";
+import orange from "../assets/images/oranges.png";
+import kiwi from "../assets/images/kiwi-hayward.webp";
+import grape from "../assets/images/grape-1.webp";
+import pears from "../assets/images/pear-png-38680.png";
+import avacado from "../assets/images/avacado-1.webp";
+import mandarin from "../assets/images/mandarin-tr.webp";
+import plum from "../assets/images/red-plum.jpg";
+import cherry from "../assets/images/cherry-1.jpg";
+import blueberry from "../assets/images/blueberries-1.png";
+import dragonfruit from "../assets/images/red-flesh.png";
+import tamarind from "../assets/images/Tamarind.png";
 
 import FruitCalendarPopup from "../components/ui/FruitCalendarPopup";
 
