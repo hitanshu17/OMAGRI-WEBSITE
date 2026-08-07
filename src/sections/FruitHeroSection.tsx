@@ -14,12 +14,16 @@ import {
 import slid1 from "../assets/images/aslide1.jpg";
 import slid2 from "../assets/images/aslide2.jpg";
 import slid3 from "../assets/images/aslide3.jpg";
+import heroVideo from "../assets/videos/home.mp4";
 import { scrollToSection } from "../utils/scrollToSection";
 import { useNavigate } from "react-router-dom";
 
 interface Slide {
   id: number;
-  image: string;
+  type?: "image" | "video";
+  image?: string;   // used when type is "image" (or omitted)
+  video?: string;   // used when type is "video"
+  poster?: string;  // optional fallback frame shown before video loads
   eyebrow?: string;
   title: string;
   subtitle?: string;
@@ -30,7 +34,9 @@ const PRODUCE_SECTION_ID = "our-products";
 const SLIDES: Slide[] = [
   {
     id: 1,
-    image: slid1,
+    type: "video",
+    video: heroVideo,
+    poster: slid1, // shows instantly while the video loads
     title: "OMM AGRI VILLA LLP",
     subtitle: "Delivering Nature's Luxury",
   },
@@ -45,10 +51,16 @@ const SLIDES: Slide[] = [
     image: slid3,
     eyebrow: "Zero Chemicals. Zero Compromise.",
     title: "From Farm To Fork",
-  }
+  },
+  {
+    id: 4,
+    image: slid1,
+    eyebrow: "Trusted Since Generations",
+    title: "Rooted In Excellence",
+  },
 ];
 
-const AUTOPLAY_MS = 3000; // how long each slide stays up before advancing
+const AUTOPLAY_MS = 5000; // how long each slide stays up before advancing
 const IMAGE_DRIFT_S = 7; // ken-burns duration — a beat longer than autoplay so it never visibly "settles"
 const TRANSITION_S = 1.1; // crossfade length between slides
 const SWIPE_THRESHOLD = 60; // px of drag before it counts as a swipe
@@ -341,14 +353,27 @@ export default function FreshFruitHero() {
           onDragEnd={handleDragEnd}
           style={{ willChange: "transform, filter, opacity" }}
         >
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `url(${slide.image})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          />
+          {slide.type === "video" ? (
+            <video
+              className="absolute inset-0 h-full w-full object-cover"
+              src={slide.video}
+              poster={slide.poster}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+            />
+          ) : (
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage: `url(${slide.image})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            />
+          )}
           <motion.div
             variants={scrimVariants}
             className="absolute inset-0 bg-linear-to-t from-black/70 via-black/25 to-black/40"
