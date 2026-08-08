@@ -18,7 +18,7 @@ const menuLinks: FooterLink[] = [
 ];
 
 const socialLinks = [
-  { label: "LinkedIn", icon: FaLinkedinIn, href: "https://linkedin.com" },
+  { label: "LinkedIn", icon: FaLinkedinIn, href: "https://www.linkedin.com/in/omm-agri-villa-a82777428/" },
   { label: "Instagram", icon: FaInstagram, href: "https://www.instagram.com/ommagrivilla" },
 ];
 
