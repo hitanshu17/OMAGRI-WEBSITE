@@ -243,7 +243,7 @@ function ArrowButton({
 
 export default function FreshFruitHero() {
   const [[index, direction], setSlide] = useState<[number, number]>([0, 1]);
-  const [isPaused, setIsPaused] = useState(false);
+  const [isPaused,] = useState(false);
   const prefersReducedMotion = useReducedMotion();
 
   const count = SLIDES.length;
@@ -335,8 +335,6 @@ export default function FreshFruitHero() {
   return (
     <div
       id="home"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
       className="relative w-full h-[90vh] min-h-105 overflow-hidden bg-black/40 select-none"
     >
       {/* Background layers */}
