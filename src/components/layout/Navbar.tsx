@@ -187,7 +187,7 @@ const Navbar = () => {
             handleScrollClick("home");
           }}
         >
-          <img src={logo} alt="logo" className="w-50 h-50 object-contain mt-3" />
+          <img src={logo} alt="logo" className="h-30 w-auto object-contain md:h-40 lg:w-50 lg:h-50 lg:mt-3" />
         </Link>
 
         {/* Right side: nav links + contact button (desktop) / burger (mobile) */}

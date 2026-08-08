@@ -11,7 +11,7 @@ import {
   type AnimationPlaybackControls,
 } from "framer-motion";
 
-import slid1 from "../assets/images/aslide1.jpg";
+import slid1 from "../assets/images/aslide1.png";
 import slid2 from "../assets/images/aslide2.jpg";
 import slid3 from "../assets/images/aslide3.jpg";
 import heroVideo from "../assets/videos/home.mp4";
@@ -243,7 +243,6 @@ function ArrowButton({
 
 export default function FreshFruitHero() {
   const [[index, direction], setSlide] = useState<[number, number]>([0, 1]);
-  const [isPaused, setIsPaused] = useState(false);
   const prefersReducedMotion = useReducedMotion();
 
   const count = SLIDES.length;
@@ -292,15 +291,9 @@ export default function FreshFruitHero() {
       onComplete: next,
     });
     playbackRef.current = controls;
-    if (isPaused) controls.pause();
     return () => controls.stop();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index]);
-
-  useEffect(() => {
-    if (isPaused) playbackRef.current?.pause();
-    else playbackRef.current?.play();
-  }, [isPaused]);
 
   // Keyboard nav
   useEffect(() => {
@@ -335,8 +328,6 @@ export default function FreshFruitHero() {
   return (
     <div
       id="home"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
       className="relative w-full h-[90vh] min-h-105 overflow-hidden bg-black/40 select-none"
     >
       {/* Background layers */}

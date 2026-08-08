@@ -1,5 +1,5 @@
 import React from "react";
-import { FaFacebook, FaInstagram } from "react-icons/fa";
+import { FaLinkedin, FaInstagram } from "react-icons/fa";
 import {
   defaultItems,
   iconMap,
@@ -14,7 +14,7 @@ interface SocialLink {
 interface ContactInfoPropsExtended extends ContactInfoProps {
   socialLinks?: {
     instagram?: SocialLink;
-    facebook?: SocialLink;
+    linkedin?: SocialLink;
   };
 }
 
@@ -25,8 +25,8 @@ const ContactInfo: React.FC<ContactInfoPropsExtended> = ({
   subheading = "We love to hear from you",
   items = defaultItems,
   socialLinks = {
-    instagram: { href: "#", label: "Instagram" },
-    facebook: { href: "#", label: "Facebook" },
+    instagram: { href: "https://www.instagram.com/ommagrivilla", label: "Instagram" },
+    linkedin: { href: "https://www.linkedin.com/in/omm-agri-villa-a82777428/", label: "Facebook" },
   },
 }) => {
   return (
@@ -76,7 +76,7 @@ const ContactInfo: React.FC<ContactInfoPropsExtended> = ({
             })}
 
             {/* Social media row — same rhythm as the items above */}
-            {(socialLinks?.instagram || socialLinks?.facebook) && (
+            {(socialLinks?.instagram || socialLinks?.linkedin) && (
               <div className="flex items-center gap-5 py-6">
                 <div className="flex -space-x-2 shrink-0">
                   {socialLinks?.instagram && (
@@ -94,10 +94,10 @@ const ContactInfo: React.FC<ContactInfoPropsExtended> = ({
                     </a>
                   )}
 
-                  {socialLinks?.facebook && (
+                  {socialLinks?.linkedin && (
                     <a
-                      href={socialLinks.facebook.href}
-                      aria-label={socialLinks.facebook.label}
+                      href={socialLinks.linkedin.href}
+                      aria-label={socialLinks.linkedin.label}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-14 h-14 rounded-full flex items-center justify-center
@@ -105,7 +105,7 @@ const ContactInfo: React.FC<ContactInfoPropsExtended> = ({
                                  ring-4 ring-white
                                  transition-transform duration-200 hover:scale-105 hover:z-10 relative"
                     >
-                      <FaFacebook className="w-6 h-6 text-white" />
+                      <FaLinkedin className="w-6 h-6 text-white" />
                     </a>
                   )}
                 </div>
