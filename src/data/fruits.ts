@@ -24,7 +24,7 @@ import redDelApple from "../assets/images/delicius-red.avif";
 import washington from "../assets/images/washington.jpg";
 import fuji from "../assets/images/red-fuji.jpeg";
 import gala from "../assets/images/gala-apple.jpg";
-import queen from "../assets/images/queen.jpeg";
+import queen from "../assets/images/apple-queens.jpeg";
 import pinkLady from "../assets/images/Pink-Lady-Apple.jpg";
 import green from "../assets/images/green.jpg";
 
