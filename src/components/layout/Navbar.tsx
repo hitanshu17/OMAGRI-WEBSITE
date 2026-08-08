@@ -123,7 +123,7 @@ const Navbar = () => {
         className="relative group pb-1"
       >
         <span
-          className={`font-bold transition-colors duration-200 group-hover:text-[#193768] ${
+          className={`text-md font-bold transition-colors duration-200 group-hover:text-[#193768] ${
             isActive ? "font-bold text-[#193768]" : "text-black"
           }`}
         >
@@ -176,7 +176,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-white shadow-sm h-20 z-50">
+    <nav className="fixed top-0 left-0 w-full bg-white shadow-sm h-25 z-50">
       <div className="max-w-7xl mx-auto h-full flex items-center justify-between px-6 md:px-8">
         {/* Logo - left side */}
         <Link
@@ -187,7 +187,7 @@ const Navbar = () => {
             handleScrollClick("home");
           }}
         >
-          <img src={logo} alt="logo" className="w-42 h-42 object-contain" />
+          <img src={logo} alt="logo" className="w-50 h-50 object-contain mt-3" />
         </Link>
 
         {/* Right side: nav links + contact button (desktop) / burger (mobile) */}

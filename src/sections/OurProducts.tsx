@@ -1,17 +1,17 @@
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-import apple from "../assets/images/Pink-Lady-Apple.jpg";
+import apple from "../assets/images/delicius-red.avif";
 import orange from "../assets/images/oranges.png";
 import kiwi from "../assets/images/kiwi-hayward.webp";
-import grape from "../assets/images/grape-1.webp";
+import grape from "../assets/images/autumn.jpeg";
 import pears from "../assets/images/pear-png-38680.png";
 import avacado from "../assets/images/avacado-1.webp";
 import mandarin from "../assets/images/mandarin-tr.webp";
 import plum from "../assets/images/red-plum.jpg";
 import cherry from "../assets/images/cherry-1.jpg";
 import blueberry from "../assets/images/blueberries-1.png";
-import dragonfruit from "../assets/images/red-flesh.png";
+import dragonfruit from "../assets/images/white-flesh.jpg";
 import tamarind from "../assets/images/Tamarind.png";
 
 import FruitCalendarPopup from "../components/ui/FruitCalendarPopup";
@@ -29,27 +29,27 @@ const featuredCards = [
     cta: "Explore Varieties",
   },
   {
-    key: "citrus",
-    slug: "orange",
+    key: "apple",
+    slug: "apple",
     theme: "dark",
     eyebrow: "Bestseller",
-    title: "Citrus",
-    desc: "Sun-drenched oranges from South Africa and Egypt, known for high juice content and vibrant essential oils.",
-    image: orange,
-    tags: ["Valencia", "Navel", "Midnight Valencia"],
-    cta: "View Harvest Calendar",
+    title: "Apple",
+    desc: "Firm, cold-stored apples available year round across sweet and tart varieties, sourced for consistent crunch and shelf life.",
+    image: apple,
+    tags: ["Gala", "Fuji", "Pink Lady"],
+    cta: "Explore Varieties",
   },
 ];
 
 const produceCards = [
   {
-    key: "apples",
-    slug: "apple",
+    key: "citrus",
+    slug: "orange",
     theme: "light",
-    title: "Apples",
-    desc: "Firm, cold-stored apples available year round across sweet and tart varieties.",
-    image: apple,
-    tag: "Gala · Fuji · Pink Lady",
+    title: "Citrus",
+    desc: "Sun-drenched oranges from South Africa and Egypt, known for high juice content and vibrant essential oils.",
+    image: orange,
+    tag: "Valencia · Navel · Midnight Valencia",
   },
   {
     key: "mandarins",
