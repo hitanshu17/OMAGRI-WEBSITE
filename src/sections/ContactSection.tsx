@@ -23,12 +23,21 @@ const ContactSection = () => {
   ];
 
   const handleSubmit = async (data: ContactFormData) => {
-    console.log("Form submitted:", data);
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || "Failed to submit");
+    }
   };
 
   return (
     <section id="contact-us">
-      <div className="className=px-6 pt-16 md:px-12 lg:px-20">
+      <div className="px-6 pt-16 md:px-12 lg:px-20">
         <h2
           className="text-4xl sm:text-5xl font-extrabold text-center text-slate-900 mb-12"
           id="contact"
