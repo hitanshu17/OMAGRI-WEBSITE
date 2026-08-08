@@ -1,7 +1,7 @@
 import ContactInfo from "../components/ui/ContactInfo";
 import GetInTouch, { type ContactFormData } from "../components/ui/GetInTouch";
 import type { ContactItem } from "../data/contactInfo";
-import contactImg from "../assets/images/contact.webp";
+import contactImg from "../assets/images/contactus.jpeg";
 
 const ContactSection = () => {
   const myItems: ContactItem[] = [
