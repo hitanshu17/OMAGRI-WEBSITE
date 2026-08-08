@@ -8,12 +8,12 @@ const ContactSection = () => {
     {
       id: "phone",
       icon: "phone",
-      content: ["+91 8448332700"],
+      content: ["(+91) 8448332700", "(+91) 9536911626"],
     },
     {
       id: "email",
       icon: "email",
-      content: ["info@ommagrivilla.in"],
+      content: ["info@ommagrivilla.in", "ommagrivilla@gmail.com"],
     },
     {
       id: "address",

@@ -9,7 +9,7 @@ export const Testimonials: Testimonial[] = [
     title: "Best Quality Ever",
     quote:
       "We have been sourcing premium fruits from OMM Agri Villa, and the quality has always been exceptional. Every shipment is fresh, well-packed, and carefully inspected before delivery. Their commitment to consistency and premium standards makes them a reliable business partner.",
-    name: "Rohit Sharma",
+    name: "Tarun Gupta",
   },
   {
     title: "Exceptional Quality & Service",
