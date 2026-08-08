@@ -291,6 +291,7 @@ const HeroSection = () => {
 
   return (
     <section
+      id="hayat-kiwi"
       ref={containerRef}
       className="relative w-full bg-[#07090a]"
       style={{ height: `${STAGE_COUNT * 100}vh` }}
