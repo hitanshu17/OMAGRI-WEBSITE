@@ -243,7 +243,6 @@ function ArrowButton({
 
 export default function FreshFruitHero() {
   const [[index, direction], setSlide] = useState<[number, number]>([0, 1]);
-  const [isPaused,] = useState(false);
   const prefersReducedMotion = useReducedMotion();
 
   const count = SLIDES.length;
@@ -292,15 +291,9 @@ export default function FreshFruitHero() {
       onComplete: next,
     });
     playbackRef.current = controls;
-    if (isPaused) controls.pause();
     return () => controls.stop();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index]);
-
-  useEffect(() => {
-    if (isPaused) playbackRef.current?.pause();
-    else playbackRef.current?.play();
-  }, [isPaused]);
 
   // Keyboard nav
   useEffect(() => {
