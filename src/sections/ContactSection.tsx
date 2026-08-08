@@ -13,7 +13,7 @@ const ContactSection = () => {
     {
       id: "email",
       icon: "email",
-      content: ["info@ommagrivilla.in", "ommagrivilla@gmail.com"],
+      content: ["info@ommagrivilla.in"],
     },
     {
       id: "address",
