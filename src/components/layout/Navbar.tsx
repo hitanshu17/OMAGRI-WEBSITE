@@ -96,9 +96,9 @@ const Navbar = () => {
 
     if (link.type === "route") {
       return (
-        <Link key={link.id} to={link.path} className="relative group pb-1">
+        <Link key={link.id} to={link.path} className="relative group pb-1 shrink-0">
           <span
-            className={`font-bold transition-colors duration-200 group-hover:text-[#193768] ${
+            className={`font-bold whitespace-nowrap transition-colors duration-200 group-hover:text-[#193768] ${
               isActive ? "font-bold text-[#193768]" : "text-black"
             }`}
           >
@@ -120,10 +120,10 @@ const Navbar = () => {
       <button
         key={link.id}
         onClick={() => handleScrollClick(link.id)}
-        className="relative group pb-1"
+        className="relative group pb-1 shrink-0"
       >
         <span
-          className={`text-md font-bold transition-colors duration-200 group-hover:text-[#193768] ${
+          className={`text-md font-bold whitespace-nowrap transition-colors duration-200 group-hover:text-[#193768] ${
             isActive ? "font-bold text-[#193768]" : "text-black"
           }`}
         >
@@ -176,39 +176,43 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-white shadow-sm h-25 z-50">
-      <div className="max-w-7xl mx-auto h-full flex items-center justify-between px-6 md:px-8">
+    <nav className="fixed top-0 left-0 w-full bg-white shadow-sm h-20 md:h-24 lg:h-25 z-50">
+      <div className="max-w-7xl mx-auto h-full flex items-center justify-between px-4 sm:px-6 md:px-8">
         {/* Logo - left side */}
         <Link
           to="/"
-          className="flex items-center gap-3"
+          className="flex items-center gap-3 shrink-0"
           onClick={(e) => {
             e.preventDefault();
             handleScrollClick("home");
           }}
         >
-          <img src={logo} alt="logo" className="h-30 w-auto object-contain md:h-40 lg:w-50 lg:h-50 lg:mt-3" />
+          <img
+            src={logo}
+            alt="logo"
+            className="h-40 w-auto object-contain sm:h-40 md:h-50 lg:h-50 lg:mt-4 md:mt-4 sm:mt-4 mt-4"
+          />
         </Link>
 
-        {/* Right side: nav links + contact button (desktop) / burger (mobile) */}
-        <div className="flex items-center gap-8">
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-10">
+        {/* Right side: nav links + contact button (desktop) / burger (tablet & mobile) */}
+        <div className="flex items-center gap-4 md:gap-8">
+          {/* Desktop Navigation — only from lg up, so tablets use the sidebar instead */}
+          <div className="hidden lg:flex items-center gap-6 xl:gap-10">
             {navLinks.map(renderDesktopLink)}
 
             {/* Contact Us - highlighted button */}
             <button
               onClick={() => handleScrollClick(contactLink.id)}
-              className="font-bold text-white px-6 py-2.5 rounded-full transition-all duration-200 hover:brightness-110 hover:shadow-md"
+              className="font-bold text-white px-5 xl:px-6 py-2.5 rounded-full whitespace-nowrap transition-all duration-200 hover:brightness-110 hover:shadow-md"
               style={{ backgroundColor: PRIMARY }}
             >
               {contactLink.label}
             </button>
           </div>
 
-          {/* Mobile burger */}
+          {/* Burger - shown on mobile AND tablet now */}
           <button
-            className="md:hidden relative w-8 h-8 flex items-center justify-center"
+            className="lg:hidden relative w-8 h-8 flex items-center justify-center"
             style={{ color: PRIMARY }}
             onClick={() => setMenu(true)}
             aria-label="Open menu"
@@ -221,9 +225,9 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile sidebar overlay */}
+      {/* Sidebar overlay - mobile & tablet */}
       <div
-        className={`md:hidden fixed inset-0 bg-black/40 transition-opacity duration-300 z-40 ${
+        className={`lg:hidden fixed inset-0 bg-black/40 transition-opacity duration-300 z-40 ${
           menu
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
@@ -231,10 +235,10 @@ const Navbar = () => {
         onClick={() => setMenu(false)}
       />
 
-      {/* Mobile sidebar panel */}
+      {/* Sidebar panel - mobile & tablet */}
       <div
         ref={sidebarRef}
-        className={`md:hidden fixed top-0 right-0 h-full w-[80%] max-w-sm bg-white z-50 shadow-xl transition-transform duration-300 ease-in-out ${
+        className={`lg:hidden fixed top-0 right-0 h-full w-[80%] max-w-sm bg-white z-50 shadow-xl transition-transform duration-300 ease-in-out ${
           menu ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -247,7 +251,7 @@ const Navbar = () => {
               handleScrollClick("home");
             }}
           >
-            <img src={logo} alt="logo" className="w-10 h-10 object-contain" />
+            <img src={logo} alt="logo" className="w-20 h-20 object-contain" />
           </Link>
           <button
             className="w-10 h-10 flex items-center justify-center rounded-md text-white transition-transform duration-300"
@@ -265,7 +269,7 @@ const Navbar = () => {
         <div className="flex flex-col">
           {navLinks.map(renderMobileLink)}
 
-          {/* Contact Us - highlighted in mobile menu too */}
+          {/* Contact Us - highlighted in sidebar too */}
           <button
             onClick={() => handleScrollClick(contactLink.id)}
             className="text-left px-6 py-4 font-bold text-white"
