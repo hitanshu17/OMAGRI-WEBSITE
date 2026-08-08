@@ -11,7 +11,7 @@ import {
   type AnimationPlaybackControls,
 } from "framer-motion";
 
-import slid1 from "../assets/images/aslide1.jpg";
+import slid1 from "../assets/images/aslide1.png";
 import slid2 from "../assets/images/aslide2.jpg";
 import slid3 from "../assets/images/aslide3.jpg";
 import heroVideo from "../assets/videos/home.mp4";
