@@ -26,13 +26,13 @@ const defaultImage = logo;
 
 const AboutSection: React.FC<AboutSectionProps> = ({
   badgeLabel = "About The Company",
-  heading = "With the experience of four generations",
+  heading = "With the experience of three generations",
   intro = "OMM AGRI VILLA LLP stands as a premier trusted importer and trader of premium global fruits. Rooted in a true dedication to integrity and excellence, we are able to prioritize the finest produce from international orchards to serve the diverse needs of the Indian market.",
   description = "Our philosophy combines the traditional value of honesty and commitment with modern, forward-looking techniques. Adopting the gap between physical growers and local distributors, one trusted relationship at a time.",
   // buttonLabel = "Read More",
   imageSrc = defaultImage,
   imageAlt = "Fresh apples",
-  yearsBadge = "30+",
+  yearsBadge = "60+",
   yearsLabel = "Year's Experience",
   // onReadMore,
 }) => {
@@ -50,17 +50,12 @@ const AboutSection: React.FC<AboutSectionProps> = ({
             />
 
             {/* Years badge */}
-            <div
-              className="absolute -bottom-6 right-0 flex h-40 w-40 flex-col items-center justify-center bg-[#193768] text-center text-white sm:h-44 sm:w-44"
-              style={{
-                clipPath:
-                  "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
-              }}
-            >
-              <span className="text-4xl font-extrabold leading-none sm:text-5xl">
+            <div className="absolute -bottom-6 left-1/2 flex w-[85%] -translate-x-1/2 items-center justify-center gap-4 rounded-2xl border border-gray-100 bg-[#193768] px-6 py-4 shadow-lg sm:w-[75%] sm:gap-5 sm:px-8 sm:py-5">
+              <span className="text-4xl font-extrabold leading-none text-white sm:text-5xl">
                 {yearsBadge}
               </span>
-              <span className="mt-2 text-xs font-bold uppercase tracking-wide sm:text-sm">
+
+              <span className="text-xs font-bold uppercase leading-snug tracking-wide text-white sm:text-sm">
                 {yearsLabel.split(" ").map((word, i) => (
                   <React.Fragment key={i}>
                     {word}

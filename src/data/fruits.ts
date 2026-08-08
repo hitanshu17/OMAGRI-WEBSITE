@@ -7,7 +7,6 @@ import redanjou from "../assets/images/redanjou.jpg";
 import willum from "../assets/images/willumpears.webp";
 import cheeky from "../assets/images/Cheeky.jpeg";
 
-
 // Kiwi
 import hkiwi from "../assets/images/Big-Kiwi.png";
 import haywardKiwi from "../assets/images/kiwi-hayward.webp";
@@ -23,8 +22,8 @@ import midVal from "../assets/images/midnight-valencia.avif";
 import apple from "../assets/images/apple.png";
 import redDelApple from "../assets/images/delicius-red.avif";
 import washington from "../assets/images/washington.jpg";
-import fuji from "../assets/images/Apfel-Fuji.jpg";
-import gala from "../assets/images/gala.jpg";
+import fuji from "../assets/images/red-fuji.jpeg";
+import gala from "../assets/images/gala-apple.jpg";
 import queen from "../assets/images/queen.jpeg";
 import pinkLady from "../assets/images/Pink-Lady-Apple.jpg";
 import green from "../assets/images/green.jpg";

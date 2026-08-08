@@ -1,3 +1,4 @@
+import BoxAndTraySection from '../components/ui/BoxAndTraySection'
 import CraftedForExcellence from '../components/ui/Craftedforexcellence'
 import FromOrchardToMarket from '../components/ui/FromOrchardToMarket'
 import HayatAdvantage from '../components/ui/HayatAdvantage'
@@ -14,6 +15,8 @@ const HayatKiwiPage = () => {
     <HayatPromise />
 
     <NaturallyNutritious />
+
+    <BoxAndTraySection />
 
     <CraftedForExcellence />
 
