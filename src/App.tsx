@@ -6,6 +6,7 @@ import LandingPage from "./pages/LandingPage";
 import FruitPage from "./pages/FruitsPage";
 import LoadingPage from "./pages/LoadingPage";
 import HayatKiwiPage from "./pages/HayatKiwi";
+import ScrollToTop from "./components/shared/ScrollToTop";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -19,6 +20,7 @@ function App() {
 
   return (
     <>
+      <ScrollToTop />
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<LandingPage />} />
