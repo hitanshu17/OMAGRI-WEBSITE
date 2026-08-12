@@ -1,5 +1,5 @@
 import React from "react";
-import { Check, Mail, Phone } from "lucide-react";
+import { Check, Mail } from "lucide-react";
 import logo from "../assets/images/OAVLOGO.png";
 // import aboutImage from "../assets/images/about-fruit.png";
 import { missionVisionData } from "../data/mission";
@@ -158,10 +158,10 @@ const AboutSection: React.FC<AboutSectionProps> = ({
 
               {/* Contact footer */}
               <div className="mt-auto space-y-2.5 border-t border-[#193768]/10 bg-[#193768]/3 px-8 py-5 text-left">
-                <div className="flex items-center gap-3 text-sm text-[#344054]">
+                {/* <div className="flex items-center gap-3 text-sm text-[#344054]">
                   <Phone className="h-4 w-4 shrink-0 text-[#193768]" />
                   <span>{leader.phone}</span>
-                </div>
+                </div> */}
                 <div className="flex items-center gap-3 text-sm text-[#344054]">
                   <Mail className="h-4 w-4 shrink-0 text-[#193768]" />
                   <span className="truncate">{leader.email}</span>

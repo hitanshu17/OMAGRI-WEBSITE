@@ -5,11 +5,11 @@ import contactImg from "../assets/images/contactus.jpeg";
 
 const ContactSection = () => {
   const myItems: ContactItem[] = [
-    {
-      id: "phone",
-      icon: "phone",
-      content: ["(+91) 8448332700"],
-    },
+    // {
+    //   id: "phone",
+    //   icon: "phone",
+    //   content: ["(+91) 8448332700"],
+    // },
     {
       id: "email",
       icon: "email",
