@@ -25,7 +25,7 @@ export const defaultItems: ContactItem[] = [
   {
     id: "email",
     icon: "email",
-    content: "ommagrivilla@gmail.com",
+    content: "info@ommagrivilla.in",
   },
   {
     id: "address",
