@@ -1,0 +1,60 @@
+name: Build and Deploy (Production)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: Production
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Build
+        run: bun run build
+
+      - name: Prepare deploy directory
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: 97.74.87.156
+          username: roots
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            sudo mkdir -p /var/www/vhosts/ommagrivilla.in/httpdocs
+            sudo rm -rf /var/www/vhosts/ommagrivilla.in/httpdocs/assets
+            sudo chown -R roots:roots /var/www/vhosts/ommagrivilla.in/httpdocs
+            sudo chmod -R 755 /var/www/vhosts/ommagrivilla.in/httpdocs
+
+      - name: Deploy to server via SSH
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: 97.74.87.156
+          username: roots
+          password: ${{ secrets.SSH_PASSWORD }}
+          source: "dist/*"
+          target: /var/www/vhosts/ommagrivilla.in/httpdocs/
+          strip_components: 1
+
+      - name: Fix SPA routing
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: 97.74.87.156
+          username: roots
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            sudo plesk repair web ommagrivilla.in -y || true
+            sudo sed -i 's|proxy_pass "https://127.0.0.1:7081";|try_files $uri $uri/ /index.html;|' /var/www/vhosts/system/ommagrivilla.in/conf/nginx.conf
+            sudo sed -i '/proxy_hide_header upgrade/d' /var/www/vhosts/system/ommagrivilla.in/conf/nginx.conf
+            sudo sed -i '/proxy_ssl_server_name on/d' /var/www/vhosts/system/ommagrivilla.in/conf/nginx.conf
+            sudo sed -i '/proxy_ssl_name/d' /var/www/vhosts/system/ommagrivilla.in/conf/nginx.conf
+            sudo sed -i '/proxy_ssl_session_reuse/d' /var/www/vhosts/system/ommagrivilla.in/conf/nginx.conf
+            sudo nginx -t && sudo nginx -s reload
